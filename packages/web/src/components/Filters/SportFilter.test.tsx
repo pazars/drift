@@ -21,13 +21,9 @@ describe('SportFilter', () => {
   it('shows checkboxes as checked for selected types', () => {
     render(<SportFilter selectedTypes={['run', 'ride']} onChange={() => {}} />);
 
-    const runCheckbox = screen.getByLabelText(/run/i);
-    const rideCheckbox = screen.getByLabelText(/ride/i);
-    const walkCheckbox = screen.getByLabelText(/walk/i);
-
-    expect(runCheckbox.checked).toBe(true);
-    expect(rideCheckbox.checked).toBe(true);
-    expect(walkCheckbox.checked).toBe(false);
+    expect(screen.getByLabelText(/run/i)).toBeChecked();
+    expect(screen.getByLabelText(/ride/i)).toBeChecked();
+    expect(screen.getByLabelText(/walk/i)).not.toBeChecked();
   });
 
   it('calls onChange when toggling a sport type on', () => {
