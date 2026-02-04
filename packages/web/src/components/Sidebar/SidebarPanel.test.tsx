@@ -128,4 +128,47 @@ describe('SidebarPanel', () => {
 
     expect(screen.getByText('3 activities')).toBeInTheDocument();
   });
+
+  it('renders date range filter', () => {
+    render(<SidebarPanel />);
+
+    expect(screen.getByText(/date range/i)).toBeInTheDocument();
+  });
+
+  it('filters activities by date range', () => {
+    render(<SidebarPanel />);
+
+    const fromInput = screen.getByLabelText(/from/i);
+    const toInput = screen.getByLabelText(/to/i);
+
+    // Set date range to only include Jan 14-15
+    fireEvent.change(fromInput, { target: { value: '2024-01-14' } });
+    fireEvent.change(toInput, { target: { value: '2024-01-15' } });
+
+    // Should only show 2 activities (Jan 14 and Jan 15)
+    expect(screen.getByText('2 activities')).toBeInTheDocument();
+    expect(screen.getByText('Morning Run')).toBeInTheDocument();
+    expect(screen.getByText('Evening Ride')).toBeInTheDocument();
+    expect(screen.queryByText('Weekend Hike')).not.toBeInTheDocument();
+  });
+
+  it('clears date filter when All time is clicked', () => {
+    // Start with a date filter
+    useActivityStore.setState({
+      filter: {
+        dateRange: { start: '2024-01-14', end: '2024-01-15' },
+      },
+    });
+
+    render(<SidebarPanel />);
+
+    // Initially should show 2 activities
+    expect(screen.getByText('2 activities')).toBeInTheDocument();
+
+    // Click "All time" to clear the filter
+    fireEvent.click(screen.getByRole('button', { name: /all time/i }));
+
+    // Should now show all 3 activities
+    expect(screen.getByText('3 activities')).toBeInTheDocument();
+  });
 });
