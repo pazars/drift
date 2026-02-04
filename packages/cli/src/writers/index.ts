@@ -6,3 +6,5 @@
 export { writeFlatGeobuf, readFlatGeobuf } from './flatgeobuf';
 export { encodeFlexiblePolyline, decodeFlexiblePolyline } from './polyline';
 export type { PolylineEncodingOptions } from './polyline';
+export { createMetadataIndex, addToIndex, serializeIndex, deserializeIndex } from './metadata';
+export type { MetadataIndex } from './metadata';
