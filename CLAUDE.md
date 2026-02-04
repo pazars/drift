@@ -11,55 +11,67 @@ drift/
 └── data/             # GPX data directory (gitignored)
 ```
 
+## Git Workflow
+
+### Branch Strategy
+
+Each GitHub issue is worked on in its own branch:
+
+```bash
+git checkout -b feature/issue-5-core-types
+# or
+git checkout -b fix/issue-42-parser-bug
+```
+
+### Commits
+
+Reference the issue number and describe what the commit achieves:
+
+```
+feat(cli): add TrackPoint and TrackSegment types (#5)
+fix(parser): handle missing elevation data (#42)
+test(cli): add GPX parser edge case tests (#7)
+```
+
+### Pull Requests
+
+1. Push branch and open PR against `main`
+2. CI workflow runs automatically (lint, typecheck, test, build)
+3. All checks must pass before merging
+4. Use squash merge or regular merge
+
+### CI Verification
+
+The GitHub Actions workflow runs on every PR to verify:
+- Code passes linting (ESLint + Prettier)
+- TypeScript compiles without errors
+- All tests pass
+- Build succeeds
+
 ## Commands
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Development
-pnpm dev                    # Start web dev server
-pnpm --filter @drift/cli dev    # Watch CLI
-
-# Testing
-pnpm test                   # Run all tests
-pnpm test:coverage          # With coverage
-pnpm --filter @drift/cli test:watch  # Watch mode
-
-# Quality
-pnpm lint                   # ESLint
-pnpm lint:fix               # Auto-fix
-pnpm format                 # Prettier
-pnpm typecheck              # TypeScript
-
-# Build
-pnpm build                  # Build all packages
-pnpm run ci                 # Full CI check locally
+pnpm install              # Install dependencies
+pnpm dev                  # Start web dev server
+pnpm test                 # Run all tests
+pnpm test:coverage        # With coverage
+pnpm lint                 # ESLint check
+pnpm typecheck            # TypeScript check
+pnpm build                # Build all packages
+pnpm run ci               # Full CI check locally
 ```
 
 ## Git Hooks
 
-- **pre-commit**: Runs `lint-staged` (ESLint + Prettier on staged files)
-- **pre-push**: Runs `typecheck` and `test`
-
-## CI/CD Pipeline
-
-GitHub Actions runs on push to `main` and PRs:
-
-1. **lint** - ESLint + Prettier check
-2. **typecheck** - TypeScript compilation
-3. **test** - Vitest with coverage → Codecov
-4. **build** - Production build (requires lint/typecheck/test to pass)
+- **pre-commit**: Runs lint-staged (ESLint + Prettier on staged files)
+- **pre-push**: Runs typecheck and test
 
 ## Adding Dependencies
 
 ```bash
-# Root workspace
-pnpm add -D -w <package>
-
-# Specific package
-pnpm add --filter @drift/cli <package>
-pnpm add --filter @drift/web <package>
+pnpm add -D -w <package>              # Root workspace
+pnpm add --filter @drift/cli <pkg>    # CLI package
+pnpm add --filter @drift/web <pkg>    # Web package
 ```
 
 ## Test-Driven Development
