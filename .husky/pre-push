@@ -1,2 +1,2 @@
-npx pnpm typecheck
-npx pnpm test
+bun run typecheck
+bun run test
