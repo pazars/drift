@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Map, NavigationControl } from 'maplibre-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import type { Layer } from '@deck.gl/core';
+import { useReducedMotion } from '../../hooks';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 // OpenFreeMap free tile source
@@ -27,6 +28,7 @@ export function MapWithDeck({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<Map | null>(null);
   const overlayRef = useRef<MapboxOverlay | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   // Initialize map and deck.gl overlay
   useEffect(() => {
@@ -37,6 +39,8 @@ export function MapWithDeck({
       style: styleUrl,
       center: initialCenter,
       zoom: initialZoom,
+      // Disable animations when user prefers reduced motion
+      fadeDuration: prefersReducedMotion ? 0 : 300,
     });
 
     map.addControl(new NavigationControl(), 'top-right');
@@ -65,7 +69,7 @@ export function MapWithDeck({
       mapRef.current = null;
       overlayRef.current = null;
     };
-  }, [styleUrl, initialCenter, initialZoom, onError]);
+  }, [styleUrl, initialCenter, initialZoom, onError, prefersReducedMotion]);
 
   // Update layers when they change
   useEffect(() => {
