@@ -113,4 +113,19 @@ describe('ActivityDetail', () => {
 
     expect(screen.getByText(/1:15:23/)).toBeInTheDocument();
   });
+
+  it('calls onClose when Escape key is pressed', () => {
+    const onClose = vi.fn();
+    render(<ActivityDetail activity={mockActivity} onClose={onClose} />);
+
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('does not call onClose on Escape when onClose is not provided', () => {
+    // Should not throw
+    render(<ActivityDetail activity={mockActivity} />);
+    fireEvent.keyDown(document, { key: 'Escape' });
+  });
 });

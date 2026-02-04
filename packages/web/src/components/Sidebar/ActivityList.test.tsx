@@ -62,6 +62,91 @@ describe('ActivityList', () => {
   });
 });
 
+describe('ActivityList keyboard navigation', () => {
+  it('focuses first activity on arrow down when list has focus', () => {
+    render(<ActivityList activities={mockActivities} />);
+
+    const list = screen.getByRole('listbox');
+    fireEvent.keyDown(list, { key: 'ArrowDown' });
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    expect(firstItem).toHaveFocus();
+  });
+
+  it('moves focus down with arrow down key', () => {
+    render(<ActivityList activities={mockActivities} />);
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    firstItem.focus();
+    fireEvent.keyDown(firstItem, { key: 'ArrowDown' });
+
+    const secondItem = screen.getByTestId('activity-item-activity-2');
+    expect(secondItem).toHaveFocus();
+  });
+
+  it('moves focus up with arrow up key', () => {
+    render(<ActivityList activities={mockActivities} />);
+
+    const secondItem = screen.getByTestId('activity-item-activity-2');
+    secondItem.focus();
+    fireEvent.keyDown(secondItem, { key: 'ArrowUp' });
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    expect(firstItem).toHaveFocus();
+  });
+
+  it('does not wrap focus at the top', () => {
+    render(<ActivityList activities={mockActivities} />);
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    firstItem.focus();
+    fireEvent.keyDown(firstItem, { key: 'ArrowUp' });
+
+    expect(firstItem).toHaveFocus();
+  });
+
+  it('does not wrap focus at the bottom', () => {
+    render(<ActivityList activities={mockActivities} />);
+
+    const secondItem = screen.getByTestId('activity-item-activity-2');
+    secondItem.focus();
+    fireEvent.keyDown(secondItem, { key: 'ArrowDown' });
+
+    expect(secondItem).toHaveFocus();
+  });
+
+  it('selects activity on Enter key', () => {
+    const onSelect = vi.fn();
+    render(<ActivityList activities={mockActivities} onSelect={onSelect} />);
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    firstItem.focus();
+    fireEvent.keyDown(firstItem, { key: 'Enter' });
+
+    expect(onSelect).toHaveBeenCalledWith('activity-1');
+  });
+
+  it('selects activity on Space key', () => {
+    const onSelect = vi.fn();
+    render(<ActivityList activities={mockActivities} onSelect={onSelect} />);
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    firstItem.focus();
+    fireEvent.keyDown(firstItem, { key: ' ' });
+
+    expect(onSelect).toHaveBeenCalledWith('activity-1');
+  });
+
+  it('has visible focus indicator', () => {
+    render(<ActivityList activities={mockActivities} />);
+
+    const firstItem = screen.getByTestId('activity-item-activity-1');
+    firstItem.focus();
+
+    expect(firstItem).toHaveClass('focus:ring-2');
+  });
+});
+
 describe('ActivityListItem', () => {
   const mockActivity = mockActivities[0]!;
 
