@@ -6,3 +6,16 @@
  */
 
 export const VERSION = '0.0.1';
+
+// Type exports
+export type {
+  TrackPoint,
+  TrackPointExtensions,
+  TrackSegment,
+  ParsedTrack,
+  ParseResult,
+  ElevationStats,
+  BoundingBox,
+  SportType,
+  ActivityMetadata,
+} from './types';
