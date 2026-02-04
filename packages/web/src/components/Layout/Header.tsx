@@ -15,6 +15,8 @@ export function Header({ activityCount, onToggleSidebar, isSidebarOpen }: Header
         {onToggleSidebar && (
           <button
             aria-label="Toggle sidebar"
+            aria-expanded={isSidebarOpen}
+            aria-controls="sidebar"
             onClick={onToggleSidebar}
             className="lg:hidden p-2 hover:bg-slate-700 rounded"
           >

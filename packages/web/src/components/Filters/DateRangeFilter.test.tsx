@@ -119,4 +119,20 @@ describe('DateRangeFilter', () => {
     const thisYearButton = screen.getByRole('button', { name: /this year/i });
     expect(thisYearButton).toHaveClass('bg-blue-100');
   });
+
+  it('has accessible group for quick presets', () => {
+    render(<DateRangeFilter onChange={() => {}} />);
+
+    expect(screen.getByRole('group', { name: /quick date presets/i })).toBeInTheDocument();
+  });
+
+  it('preset buttons have aria-pressed state', () => {
+    render(<DateRangeFilter startDate="2024-01-01" endDate="2024-06-15" onChange={() => {}} />);
+
+    const thisYearButton = screen.getByRole('button', { name: /this year/i });
+    const last30Button = screen.getByRole('button', { name: /last 30 days/i });
+
+    expect(thisYearButton).toHaveAttribute('aria-pressed', 'true');
+    expect(last30Button).toHaveAttribute('aria-pressed', 'false');
+  });
 });
