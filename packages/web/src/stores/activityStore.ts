@@ -55,7 +55,7 @@ export const useActivityStore = create<ActivityState>((set, get) => ({
 
     return activities.filter((activity) => {
       // Filter by types
-      if (filter.types && filter.types.length > 0) {
+      if (filter.types !== undefined) {
         if (!filter.types.includes(activity.type)) {
           return false;
         }
