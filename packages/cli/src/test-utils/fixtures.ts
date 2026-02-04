@@ -1,8 +1,10 @@
 import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-// Fixtures directory relative to project root
-const FIXTURES_DIR = resolve(process.cwd(), 'packages/cli/fixtures');
+// Fixtures directory relative to this file (src/test-utils/fixtures.ts)
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const FIXTURES_DIR = resolve(__dirname, '../../fixtures');
 
 /**
  * Load a fixture file as a string.

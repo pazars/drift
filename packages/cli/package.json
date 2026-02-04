@@ -24,8 +24,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/geojson": "^7946.0.16",
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^4.0.18",
     "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "@tmcw/togeojson": "^7.1.2",
+    "fast-xml-parser": "^5.3.4",
+    "linkedom": "^0.18.12"
   }
 }
