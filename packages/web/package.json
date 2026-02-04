@@ -41,6 +41,8 @@
     "@deck.gl/core": "^9.2.6",
     "@deck.gl/layers": "^9.2.6",
     "@deck.gl/mapbox": "^9.2.6",
+    "@mapbox/polyline": "^1.2.1",
+    "@types/mapbox__polyline": "^1.0.5",
     "maplibre-gl": "^5.17.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

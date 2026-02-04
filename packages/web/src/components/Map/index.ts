@@ -4,3 +4,4 @@ export { MapErrorBoundary } from './MapErrorBoundary';
 export type { MapErrorBoundaryProps } from './MapErrorBoundary';
 export { MapWithDeck } from './MapWithDeck';
 export type { MapWithDeckProps } from './MapWithDeck';
+export { createActivityLayers } from './ActivityLayer';
