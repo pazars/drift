@@ -64,3 +64,36 @@ vi.mock('maplibre-gl', () => ({
   Map: MockMap,
   NavigationControl: MockNavigationControl,
 }));
+
+// Mock @deck.gl/mapbox MapboxOverlay
+class MockMapboxOverlay {
+  private layers: unknown[] = [];
+
+  constructor(options?: { layers?: unknown[]; interleaved?: boolean }) {
+    this.layers = options?.layers ?? [];
+  }
+
+  setProps(props: { layers?: unknown[] }): void {
+    if (props.layers) {
+      this.layers = props.layers;
+    }
+  }
+
+  finalize(): void {
+    this.layers = [];
+  }
+
+  onAdd(): HTMLDivElement {
+    return document.createElement('div');
+  }
+
+  onRemove(): void {}
+
+  getLayers(): unknown[] {
+    return this.layers;
+  }
+}
+
+vi.mock('@deck.gl/mapbox', () => ({
+  MapboxOverlay: MockMapboxOverlay,
+}));
