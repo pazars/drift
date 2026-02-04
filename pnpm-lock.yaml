@@ -35,6 +35,9 @@ importers:
 
   packages/cli:
     dependencies:
+      '@here/flexpolyline':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@tmcw/togeojson':
         specifier: ^7.1.2
         version: 7.1.2
@@ -266,6 +269,9 @@ packages:
   '@eslint/js@8.57.1':
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@here/flexpolyline@0.1.0':
+    resolution: {integrity: sha512-aiFWozFqTbeAG6S8AOH9QPF7UYjChE1ApV+0dK4kiWp+S2MIJXD/WzHZ9kwd8hDC8gHRAl/yVtJ50uVf26/ygQ==}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -1525,6 +1531,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.1': {}
+
+  '@here/flexpolyline@0.1.0': {}
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:

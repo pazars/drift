@@ -30,6 +30,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
+    "@here/flexpolyline": "^0.1.0",
     "@tmcw/togeojson": "^7.1.2",
     "fast-xml-parser": "^5.3.4",
     "flatgeobuf": "^4.4.0",
