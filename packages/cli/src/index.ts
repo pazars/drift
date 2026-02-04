@@ -8,7 +8,8 @@
 export const VERSION = '0.0.1';
 
 // Parser exports
-export { parseGPX } from './parsers';
+export { parseGPX, calculateMetadata } from './parsers';
+export type { CalculatedMetadata } from './parsers';
 
 // Error exports
 export { DriftError, GPXParseError, EmptyTrackError, InvalidCoordinatesError } from './errors';

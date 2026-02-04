@@ -4,3 +4,5 @@
  */
 
 export { parseGPX } from './gpx';
+export { calculateMetadata } from './metadata';
+export type { CalculatedMetadata } from './metadata';
