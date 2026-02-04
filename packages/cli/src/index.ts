@@ -11,6 +11,9 @@ export const VERSION = '0.0.1';
 export { parseGPX, calculateMetadata } from './parsers';
 export type { CalculatedMetadata } from './parsers';
 
+// Transform exports
+export { simplify3D, perpendicularDistance3D } from './transforms';
+
 // Error exports
 export { DriftError, GPXParseError, EmptyTrackError, InvalidCoordinatesError } from './errors';
 export type {
