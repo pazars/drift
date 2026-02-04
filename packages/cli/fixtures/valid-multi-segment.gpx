@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Test"
+  xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>Trail Run with Tunnel</name>
+    <type>running</type>
+    <trkseg>
+      <trkpt lat="37.8000" lon="-122.4000">
+        <ele>50</ele>
+        <time>2024-01-15T09:00:00Z</time>
+      </trkpt>
+      <trkpt lat="37.8010" lon="-122.3990">
+        <ele>55</ele>
+        <time>2024-01-15T09:01:00Z</time>
+      </trkpt>
+      <trkpt lat="37.8020" lon="-122.3980">
+        <ele>60</ele>
+        <time>2024-01-15T09:02:00Z</time>
+      </trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="37.8050" lon="-122.3950">
+        <ele>65</ele>
+        <time>2024-01-15T09:05:00Z</time>
+      </trkpt>
+      <trkpt lat="37.8060" lon="-122.3940">
+        <ele>70</ele>
+        <time>2024-01-15T09:06:00Z</time>
+      </trkpt>
+    </trkseg>
+    <trkseg>
+      <trkpt lat="37.8100" lon="-122.3900">
+        <ele>80</ele>
+        <time>2024-01-15T09:10:00Z</time>
+      </trkpt>
+      <trkpt lat="37.8110" lon="-122.3890">
+        <ele>75</ele>
+        <time>2024-01-15T09:11:00Z</time>
+      </trkpt>
+      <trkpt lat="37.8120" lon="-122.3880">
+        <ele>70</ele>
+        <time>2024-01-15T09:12:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
