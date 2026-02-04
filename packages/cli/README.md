@@ -5,8 +5,8 @@ GPX preprocessing CLI tool for the Drift application.
 ## Installation
 
 ```bash
-pnpm install
-pnpm build
+bun install
+bun run build
 ```
 
 ## Usage
@@ -80,11 +80,11 @@ Encoded polyline format (Google/Flexible Polyline). Compact text representation 
 ## Development
 
 ```bash
-pnpm dev          # Watch mode
-pnpm test         # Run tests
-pnpm test:watch   # Watch tests
-pnpm lint         # Lint code
-pnpm typecheck    # Type check
+bun run dev          # Watch mode
+bun run test         # Run tests
+bun run test:watch   # Watch tests
+bun run lint         # Lint code
+bun run typecheck    # Type check
 ```
 
 ## Architecture

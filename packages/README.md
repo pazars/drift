@@ -46,15 +46,15 @@ React web application for visualizing processed GPX activity data on interactive
 From the repository root:
 
 ```bash
-pnpm install      # Install all dependencies
-pnpm build        # Build all packages
-pnpm test         # Run all tests
-pnpm lint         # Lint all packages
+bun install       # Install all dependencies
+bun run build     # Build all packages
+bun run test      # Run all tests
+bun run lint      # Lint all packages
 ```
 
 Package-specific commands can be run with workspace filters:
 
 ```bash
-pnpm --filter @drift/cli test
-pnpm --filter @drift/web dev
+bun run --cwd packages/cli test
+bun run --cwd packages/web dev
 ```

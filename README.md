@@ -7,8 +7,8 @@ GPX Activity Visualization App - A local application for visualizing years of GP
 ## Installation
 
 ```bash
-pnpm install
-pnpm build
+bun install
+bun run build
 ```
 
 ## CLI Usage
@@ -37,11 +37,11 @@ Run `drift --help` for all options.
 ## Development
 
 ```bash
-pnpm install      # Install dependencies
-pnpm test         # Run tests
-pnpm lint         # Run linting
-pnpm build        # Build
-pnpm ci           # Full CI check
+bun install       # Install dependencies
+bun run test      # Run tests
+bun run lint      # Run linting
+bun run build     # Build
+bun run ci        # Full CI check
 ```
 
 ## License

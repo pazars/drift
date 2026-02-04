@@ -5,8 +5,8 @@ GPX visualization web application built with React, MapLibre GL, and deck.gl.
 ## Quick Start
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 Open http://localhost:5173
@@ -23,19 +23,19 @@ Open http://localhost:5173
 ## Development
 
 ```bash
-pnpm dev             # Start dev server (Vite)
-pnpm build           # Production build
-pnpm preview         # Preview production build
+bun run dev             # Start dev server (Vite)
+bun run build           # Production build
+bun run preview         # Preview production build
 
-pnpm test            # Run unit tests (Vitest)
-pnpm test:watch      # Watch mode
-pnpm test:coverage   # With coverage
+bun run test            # Run unit tests (Vitest)
+bun run test:watch      # Watch mode
+bun run test:coverage   # With coverage
 
-pnpm test:e2e        # Run E2E tests (Playwright)
-pnpm test:e2e:ui     # Playwright UI mode
+bun run test:e2e        # Run E2E tests (Playwright)
+bun run test:e2e:ui     # Playwright UI mode
 
-pnpm lint            # ESLint
-pnpm typecheck       # TypeScript check
+bun run lint            # ESLint
+bun run typecheck       # TypeScript check
 ```
 
 ## Architecture
@@ -78,11 +78,11 @@ Unit tests are co-located with components (`*.test.tsx`). E2E tests are in the `
 
 ```bash
 # Run all tests
-pnpm test
+bun run test
 
 # Run specific test file
-pnpm test src/components/Map/MapContainer.test.tsx
+bun run test src/components/Map/MapContainer.test.tsx
 
 # E2E tests
-pnpm test:e2e
+bun run test:e2e
 ```

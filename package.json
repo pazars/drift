@@ -4,18 +4,21 @@
   "private": true,
   "description": "GPX Activity Visualization App",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "build": "pnpm -r build",
-    "dev": "pnpm --filter web dev",
+    "build": "bun run --filter '*' build",
+    "dev": "bun run --cwd packages/web dev",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "test": "pnpm -r test",
-    "test:coverage": "pnpm -r test:coverage",
-    "test:e2e": "pnpm --filter web test:e2e",
-    "ci": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "test": "bun run --filter '*' test",
+    "test:coverage": "bun run --filter '*' test:coverage",
+    "test:e2e": "bun run --cwd packages/web test:e2e",
+    "ci": "bun run lint && bun run typecheck && bun run test && bun run build",
     "prepare": "husky"
   },
   "keywords": [
@@ -27,7 +30,6 @@
   ],
   "author": "",
   "license": "MIT",
-  "packageManager": "pnpm@9.15.0",
   "engines": {
     "node": ">=20.0.0"
   },
