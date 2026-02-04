@@ -12,15 +12,17 @@ export interface Activity {
   date: string;
   distance: number; // in meters
   duration: number; // in seconds
-  elevation?: number; // total elevation gain in meters
+  elevation?: number | undefined; // total elevation gain in meters
   polyline: string; // encoded polyline
-  bounds?: {
-    north: number;
-    south: number;
-    east: number;
-    west: number;
-  };
-  tags?: string[];
+  bounds?:
+    | {
+        north: number;
+        south: number;
+        east: number;
+        west: number;
+      }
+    | undefined;
+  tags?: string[] | undefined;
 }
 
 export type ActivityType = 'run' | 'ride' | 'walk' | 'hike' | 'swim' | 'ski' | 'other';
