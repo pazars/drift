@@ -46,13 +46,15 @@ export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
   };
 
   return (
-    <div className="p-4 border-b border-gray-200">
+    <fieldset className="p-4 border-b border-gray-200">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-gray-800">Sport Type</h3>
-        <span className="text-sm text-gray-500">{getSelectionText()}</span>
+        <legend className="font-semibold text-gray-800">Sport Type</legend>
+        <span className="text-sm text-gray-500" aria-live="polite">
+          {getSelectionText()}
+        </span>
       </div>
 
-      <div className="space-y-2 mb-3">
+      <div className="space-y-2 mb-3" role="group" aria-label="Sport type filters">
         {ALL_SPORT_TYPES.map((type) => (
           <label
             key={type}
@@ -67,6 +69,7 @@ export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
             />
             <span
               className="w-3 h-3 rounded-full flex-shrink-0"
+              aria-hidden="true"
               style={{ backgroundColor: getActivityColor(type) }}
             />
             <span className="text-sm text-gray-700">{SPORT_LABELS[type]}</span>
@@ -88,6 +91,6 @@ export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
           Clear All
         </button>
       </div>
-    </div>
+    </fieldset>
   );
 }

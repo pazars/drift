@@ -96,4 +96,38 @@ describe('Sidebar', () => {
     const sidebar = screen.getByRole('complementary');
     expect(sidebar).not.toHaveClass('hidden');
   });
+
+  it('has accessible name', () => {
+    render(
+      <Sidebar>
+        <div>Sidebar child</div>
+      </Sidebar>
+    );
+
+    const sidebar = screen.getByRole('complementary');
+    expect(sidebar).toHaveAttribute('aria-label', 'Activity filters and list');
+  });
+});
+
+describe('Header accessibility', () => {
+  it('toggle button has aria-expanded state', () => {
+    render(<Header onToggleSidebar={() => {}} isSidebarOpen={false} />);
+
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('toggle button reflects open state', () => {
+    render(<Header onToggleSidebar={() => {}} isSidebarOpen={true} />);
+
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
+    expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('toggle button controls sidebar', () => {
+    render(<Header onToggleSidebar={() => {}} />);
+
+    const toggleButton = screen.getByLabelText(/toggle sidebar/i);
+    expect(toggleButton).toHaveAttribute('aria-controls', 'sidebar');
+  });
 });

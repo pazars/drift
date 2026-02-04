@@ -93,4 +93,17 @@ describe('SportFilter', () => {
 
     expect(screen.getByText(/none selected/i)).toBeInTheDocument();
   });
+
+  it('has accessible group for sport type filters', () => {
+    render(<SportFilter selectedTypes={[]} onChange={() => {}} />);
+
+    expect(screen.getByRole('group', { name: /sport type filters/i })).toBeInTheDocument();
+  });
+
+  it('has live region for selection status', () => {
+    render(<SportFilter selectedTypes={['run']} onChange={() => {}} />);
+
+    const status = screen.getByText(/1 selected/i);
+    expect(status).toHaveAttribute('aria-live', 'polite');
+  });
 });

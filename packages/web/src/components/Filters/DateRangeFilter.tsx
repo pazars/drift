@@ -84,8 +84,8 @@ export function DateRangeFilter({ startDate, endDate, onChange }: DateRangeFilte
   };
 
   return (
-    <div className="p-4 border-b border-gray-200">
-      <h3 className="font-semibold text-gray-800 mb-3">Date Range</h3>
+    <fieldset className="p-4 border-b border-gray-200">
+      <legend className="font-semibold text-gray-800 mb-3">Date Range</legend>
 
       <div className="space-y-3">
         <div className="flex gap-2">
@@ -115,25 +115,30 @@ export function DateRangeFilter({ startDate, endDate, onChange }: DateRangeFilte
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-1">
-          {presets.map((preset) => (
-            <button
-              key={preset.label}
-              onClick={() => handlePresetClick(preset)}
-              className={`
-                text-xs px-2 py-1 rounded border transition-colors
-                ${
-                  isPresetActive(preset, startDate, endDate)
-                    ? 'bg-blue-100 border-blue-300 text-blue-700'
-                    : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-                }
-              `}
-            >
-              {preset.label}
-            </button>
-          ))}
+        <div className="flex flex-wrap gap-1" role="group" aria-label="Quick date presets">
+          {presets.map((preset) => {
+            const isActive = isPresetActive(preset, startDate, endDate);
+            return (
+              <button
+                key={preset.label}
+                onClick={() => handlePresetClick(preset)}
+                aria-pressed={isActive}
+                className={`
+                  text-xs px-2 py-1 rounded border transition-colors
+                  ${
+                    isActive
+                      ? 'bg-blue-100 border-blue-300 text-blue-700'
+                      : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                  }
+                `}
+              >
+                {preset.label}
+              </button>
+            );
+          })}
           <button
             onClick={handleClearClick}
+            aria-pressed={!startDate && !endDate}
             className={`
               text-xs px-2 py-1 rounded border transition-colors
               ${
@@ -147,6 +152,6 @@ export function DateRangeFilter({ startDate, endDate, onChange }: DateRangeFilte
           </button>
         </div>
       </div>
-    </div>
+    </fieldset>
   );
 }
