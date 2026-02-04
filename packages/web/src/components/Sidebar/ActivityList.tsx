@@ -1,3 +1,4 @@
+import { useRef, useCallback } from 'react';
 import type { Activity } from '../../types';
 import { ActivityListItem } from './ActivityListItem';
 
@@ -8,6 +9,57 @@ export interface ActivityListProps {
 }
 
 export function ActivityList({ activities, selectedActivityId, onSelect }: ActivityListProps) {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent, activityId: string, index: number) => {
+      switch (e.key) {
+        case 'ArrowDown': {
+          e.preventDefault();
+          const nextIndex = index + 1;
+          if (nextIndex < activities.length) {
+            const nextItem = listRef.current?.querySelector(
+              `[data-testid="activity-item-${activities[nextIndex]?.id}"]`
+            ) as HTMLElement | null;
+            nextItem?.focus();
+          }
+          break;
+        }
+        case 'ArrowUp': {
+          e.preventDefault();
+          const prevIndex = index - 1;
+          if (prevIndex >= 0) {
+            const prevItem = listRef.current?.querySelector(
+              `[data-testid="activity-item-${activities[prevIndex]?.id}"]`
+            ) as HTMLElement | null;
+            prevItem?.focus();
+          }
+          break;
+        }
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          onSelect?.(activityId);
+          break;
+      }
+    },
+    [activities, onSelect]
+  );
+
+  const handleListKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      // Only handle if the list itself is the target (not bubbled from items)
+      if (e.target === e.currentTarget && e.key === 'ArrowDown' && activities.length > 0) {
+        e.preventDefault();
+        const firstItem = listRef.current?.querySelector(
+          `[data-testid="activity-item-${activities[0]?.id}"]`
+        ) as HTMLElement | null;
+        firstItem?.focus();
+      }
+    },
+    [activities]
+  );
+
   if (activities.length === 0) {
     return (
       <div className="flex flex-col h-full">
@@ -33,13 +85,21 @@ export function ActivityList({ activities, selectedActivityId, onSelect }: Activ
       </div>
 
       {/* Scrollable list */}
-      <div className="flex-1 overflow-y-auto">
-        {activities.map((activity) => (
+      <div
+        ref={listRef}
+        role="listbox"
+        aria-label="Activities"
+        tabIndex={0}
+        onKeyDown={handleListKeyDown}
+        className="flex-1 overflow-y-auto focus:outline-none"
+      >
+        {activities.map((activity, index) => (
           <ActivityListItem
             key={activity.id}
             activity={activity}
             isSelected={activity.id === selectedActivityId}
             onClick={() => onSelect?.(activity.id)}
+            onKeyDown={(e) => handleKeyDown(e, activity.id, index)}
           />
         ))}
       </div>

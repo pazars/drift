@@ -5,6 +5,7 @@ export interface ActivityListItemProps {
   activity: Activity;
   isSelected?: boolean;
   onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
 /**
@@ -42,16 +43,26 @@ function formatDuration(seconds: number): string {
   return `${minutes}m`;
 }
 
-export function ActivityListItem({ activity, isSelected = false, onClick }: ActivityListItemProps) {
+export function ActivityListItem({
+  activity,
+  isSelected = false,
+  onClick,
+  onKeyDown,
+}: ActivityListItemProps) {
   const sportColor = getActivityColor(activity.type);
 
   return (
     <div
       data-testid={`activity-item-${activity.id}`}
       data-selected={isSelected}
+      role="option"
+      aria-selected={isSelected}
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={onKeyDown}
       className={`
         flex items-start gap-3 p-3 cursor-pointer transition-colors border-b border-gray-100
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset
         ${isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'}
       `}
     >

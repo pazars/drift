@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { Activity } from '../../types';
 import { getActivityColor } from '../../utils/colors';
 
@@ -38,6 +39,17 @@ function capitalizeFirst(str: string): string {
 
 export function ActivityDetail({ activity, onClose, onZoomToFit }: ActivityDetailProps) {
   const sportColor = getActivityColor(activity.type);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && onClose) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   return (
     <div className="bg-white border-l border-gray-200 w-80 flex flex-col h-full">
