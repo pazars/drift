@@ -7,6 +7,17 @@
 
 export const VERSION = '0.0.1';
 
+// Parser exports
+export { parseGPX } from './parsers';
+
+// Error exports
+export { DriftError, GPXParseError, EmptyTrackError, InvalidCoordinatesError } from './errors';
+export type {
+  GPXParseErrorOptions,
+  EmptyTrackErrorOptions,
+  InvalidCoordinatesErrorOptions,
+} from './errors';
+
 // Type exports
 export type {
   TrackPoint,

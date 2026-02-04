@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { parseGPX } from '../gpx';
 import { loadFixture, FIXTURES } from '../../test-utils/fixtures';
+import { GPXParseError, EmptyTrackError } from '../../errors';
 
 describe('parseGPX', () => {
   describe('valid GPX files', () => {
@@ -76,17 +77,17 @@ describe('parseGPX', () => {
   });
 
   describe('error handling', () => {
-    it('throws on corrupted XML', () => {
+    it('throws GPXParseError on corrupted XML', () => {
       // Completely malformed XML that cannot be parsed
       const malformedXml = '<<<not valid xml at all>>>';
 
-      expect(() => parseGPX(malformedXml)).toThrow();
+      expect(() => parseGPX(malformedXml)).toThrow(GPXParseError);
     });
 
-    it('throws on empty track', () => {
+    it('throws EmptyTrackError on empty track', () => {
       const gpxContent = loadFixture(FIXTURES.EMPTY_TRACK);
 
-      expect(() => parseGPX(gpxContent)).toThrow(/no track/i);
+      expect(() => parseGPX(gpxContent)).toThrow(EmptyTrackError);
     });
   });
 
