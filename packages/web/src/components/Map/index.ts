@@ -5,3 +5,7 @@ export type { MapErrorBoundaryProps } from './MapErrorBoundary';
 export { MapWithDeck } from './MapWithDeck';
 export type { MapWithDeckProps } from './MapWithDeck';
 export { createActivityLayers } from './ActivityLayer';
+export { createHeatmapLayer } from './HeatmapLayer';
+export type { HeatmapPoint, CreateHeatmapLayerOptions } from './HeatmapLayer';
+export { ViewModeToggle } from './ViewModeToggle';
+export type { ViewMode, ViewModeToggleProps } from './ViewModeToggle';
