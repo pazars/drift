@@ -137,3 +137,15 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Documents for Claude Code
+docs
+
+# Data directories (GPX files)
+data/raw/
+data/processed/
+
+# IDE
+.idea/
+*.swp
+*.swo

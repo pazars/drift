@@ -1,0 +1,27 @@
+{
+  "name": "@drift/web",
+  "version": "0.0.1",
+  "description": "GPX visualization web application",
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Vite not configured yet - see Issue #21'",
+    "build": "tsc --noEmit",
+    "preview": "echo 'Vite not configured yet - see Issue #21'",
+    "test": "echo 'Vitest not configured yet - see Issue #3'",
+    "test:watch": "echo 'Vitest not configured yet'",
+    "test:coverage": "echo 'Vitest not configured yet'",
+    "test:e2e": "echo 'Playwright not configured yet - see Issue #38'",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "gpx",
+    "visualization",
+    "maps"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0"
+  }
+}

@@ -1,0 +1,2 @@
+npx pnpm typecheck
+npx pnpm test
