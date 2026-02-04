@@ -1,0 +1,104 @@
+import { create } from 'zustand';
+import type { Activity, ActivityFilter } from '../types';
+
+export interface ActivityState {
+  activities: Activity[];
+  selectedActivityId: string | null;
+  filter: ActivityFilter;
+  isLoading: boolean;
+  error: string | null;
+
+  // Actions
+  setActivities: (activities: Activity[]) => void;
+  addActivity: (activity: Activity) => void;
+  removeActivity: (id: string) => void;
+  selectActivity: (id: string | null) => void;
+  setFilter: (filter: ActivityFilter) => void;
+  clearFilter: () => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+
+  // Computed
+  filteredActivities: () => Activity[];
+  getSelectedActivity: () => Activity | undefined;
+}
+
+export const useActivityStore = create<ActivityState>((set, get) => ({
+  activities: [],
+  selectedActivityId: null,
+  filter: {},
+  isLoading: false,
+  error: null,
+
+  setActivities: (activities) => set({ activities }),
+
+  addActivity: (activity) => set((state) => ({ activities: [...state.activities, activity] })),
+
+  removeActivity: (id) =>
+    set((state) => ({
+      activities: state.activities.filter((a) => a.id !== id),
+      selectedActivityId: state.selectedActivityId === id ? null : state.selectedActivityId,
+    })),
+
+  selectActivity: (id) => set({ selectedActivityId: id }),
+
+  setFilter: (filter) => set({ filter }),
+
+  clearFilter: () => set({ filter: {} }),
+
+  setLoading: (isLoading) => set({ isLoading }),
+
+  setError: (error) => set({ error }),
+
+  filteredActivities: () => {
+    const { activities, filter } = get();
+
+    return activities.filter((activity) => {
+      // Filter by types
+      if (filter.types && filter.types.length > 0) {
+        if (!filter.types.includes(activity.type)) {
+          return false;
+        }
+      }
+
+      // Filter by minimum distance
+      if (filter.minDistance !== undefined) {
+        if (activity.distance < filter.minDistance) {
+          return false;
+        }
+      }
+
+      // Filter by maximum distance
+      if (filter.maxDistance !== undefined) {
+        if (activity.distance > filter.maxDistance) {
+          return false;
+        }
+      }
+
+      // Filter by tags
+      if (filter.tags && filter.tags.length > 0) {
+        if (!activity.tags || !filter.tags.some((tag) => activity.tags?.includes(tag))) {
+          return false;
+        }
+      }
+
+      // Filter by date range
+      if (filter.dateRange) {
+        const activityDate = new Date(activity.date);
+        const startDate = new Date(filter.dateRange.start);
+        const endDate = new Date(filter.dateRange.end);
+
+        if (activityDate < startDate || activityDate > endDate) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  },
+
+  getSelectedActivity: () => {
+    const { activities, selectedActivityId } = get();
+    return activities.find((a) => a.id === selectedActivityId);
+  },
+}));
