@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "gpx-cli": "./dist/cli.js"
+    "gpx-cli": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc",
@@ -33,6 +33,7 @@
     "@here/flexpolyline": "^0.1.0",
     "@tmcw/togeojson": "^7.1.2",
     "chokidar": "^5.0.0",
+    "commander": "^14.0.3",
     "fast-glob": "^3.3.3",
     "fast-xml-parser": "^5.3.4",
     "flatgeobuf": "^4.4.0",
