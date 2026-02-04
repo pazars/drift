@@ -13,6 +13,7 @@ const mockActivities: Activity[] = [
     distance: 5000,
     duration: 1800,
     polyline: 'abc123',
+    elevation: 100,
   },
   {
     id: '2',
@@ -22,6 +23,7 @@ const mockActivities: Activity[] = [
     distance: 25000,
     duration: 3600,
     polyline: 'def456',
+    elevation: 250,
   },
   {
     id: '3',
@@ -31,6 +33,7 @@ const mockActivities: Activity[] = [
     distance: 10000,
     duration: 7200,
     polyline: 'ghi789',
+    elevation: 500,
   },
 ];
 
@@ -170,5 +173,24 @@ describe('SidebarPanel', () => {
 
     // Should now show all 3 activities
     expect(screen.getByText('3 activities')).toBeInTheDocument();
+  });
+
+  it('displays total elevation stats', () => {
+    render(<SidebarPanel />);
+
+    expect(screen.getByText(/total elevation/i)).toBeInTheDocument();
+    // 100 + 250 + 500 = 850
+    expect(screen.getByText('850 m')).toBeInTheDocument();
+  });
+
+  it('updates elevation stats when filtered', () => {
+    render(<SidebarPanel />);
+
+    // Toggle off 'run' (which has 100m elevation)
+    const runCheckbox = screen.getByLabelText(/run/i);
+    fireEvent.click(runCheckbox);
+
+    // Should now show 250 + 500 = 750
+    expect(screen.getByText('750 m')).toBeInTheDocument();
   });
 });

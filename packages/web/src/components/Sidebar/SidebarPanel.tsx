@@ -1,6 +1,7 @@
 import { useActivityStore } from '../../stores/activityStore';
 import { SportFilter, DateRangeFilter } from '../Filters';
 import type { DateRange } from '../Filters';
+import { ElevationStats } from '../Stats';
 import { ActivityList } from './ActivityList';
 import type { ActivityType } from '../../types';
 
@@ -49,6 +50,9 @@ export function SidebarPanel() {
         endDate={filter.dateRange?.end}
         onChange={handleDateRangeChange}
       />
+      <div className="p-3">
+        <ElevationStats activities={activities} />
+      </div>
       <div className="flex-1 overflow-hidden">
         <ActivityList
           activities={activities}
