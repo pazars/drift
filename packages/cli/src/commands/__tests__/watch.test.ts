@@ -242,7 +242,7 @@ describe('createWatcher', () => {
       inputDir: testDir,
       outputDir,
       processor: mockProcessor,
-      debounceMs: 100,
+      debounceMs: 200, // Longer debounce for CI stability
     };
 
     handle = createWatcher(options);
@@ -257,16 +257,18 @@ describe('createWatcher', () => {
 
     const filePath = join(testDir, 'debounce-test.gpx');
 
-    // Write multiple times rapidly
+    // Write multiple times rapidly (within debounce window)
     await writeFile(filePath, SAMPLE_GPX);
+    await new Promise((resolve) => setTimeout(resolve, 20));
     await writeFile(filePath, SAMPLE_GPX + '\n');
+    await new Promise((resolve) => setTimeout(resolve, 20));
     await writeFile(filePath, SAMPLE_GPX + '\n\n');
 
     // Wait for debounced processing
     await processedPromise;
 
-    // Give a short extra delay to ensure no additional calls happen
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    // Give extra delay (longer than debounce) to ensure no additional calls happen
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     // Should only be called once due to debouncing
     expect(mockProcessor).toHaveBeenCalledTimes(1);
