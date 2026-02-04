@@ -6,6 +6,7 @@
 import { gpx } from '@tmcw/togeojson';
 import { XMLParser } from 'fast-xml-parser';
 import { DOMParser } from 'linkedom';
+import { GPXParseError, EmptyTrackError } from '../errors';
 import type {
   ParseResult,
   ParsedTrack,
@@ -71,11 +72,11 @@ export function parseGPX(content: string): ParseResult {
   try {
     gpxDoc = parser.parse(content) as GPXDocument;
   } catch {
-    throw new Error('Failed to parse GPX: Invalid XML');
+    throw new GPXParseError('Invalid XML structure');
   }
 
   if (!gpxDoc.gpx?.trk) {
-    throw new Error('Failed to parse GPX: No track found');
+    throw new GPXParseError('No track element found in GPX');
   }
 
   // Parse using togeojson for coordinate extraction
@@ -86,7 +87,7 @@ export function parseGPX(content: string): ParseResult {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const parserError = doc.querySelector('parsererror');
   if (parserError) {
-    throw new Error('Failed to parse GPX: Invalid XML');
+    throw new GPXParseError('Invalid XML structure');
   }
 
   // Cast linkedom document to DOM Document for togeojson compatibility
@@ -95,14 +96,14 @@ export function parseGPX(content: string): ParseResult {
 
   const firstFeature = geoJson.features[0];
   if (!geoJson.features || geoJson.features.length === 0 || !firstFeature?.geometry) {
-    throw new Error('Failed to parse GPX: No track data found');
+    throw new EmptyTrackError('No track data found in GPX');
   }
 
   // Extract track metadata
   const tracks = Array.isArray(gpxDoc.gpx.trk) ? gpxDoc.gpx.trk : [gpxDoc.gpx.trk];
   const firstTrack = tracks[0];
   if (!firstTrack) {
-    throw new Error('Failed to parse GPX: No track found');
+    throw new GPXParseError('No track element found in GPX');
   }
   const trackName = firstTrack.name ?? 'Unnamed Track';
   const trackType = firstTrack.type;
@@ -161,7 +162,7 @@ export function parseGPX(content: string): ParseResult {
   }
 
   if (totalPoints === 0) {
-    throw new Error('Failed to parse GPX: no track points found');
+    throw new EmptyTrackError();
   }
 
   if (!hasElevation) {
