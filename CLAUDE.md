@@ -33,6 +33,8 @@ fix(parser): handle missing elevation data (#42)
 test(cli): add GPX parser edge case tests (#7)
 ```
 
+**Do not** add Co-Authored-By lines or any email addresses to commits.
+
 ### Pull Requests
 
 1. Push branch and open PR against `main`
