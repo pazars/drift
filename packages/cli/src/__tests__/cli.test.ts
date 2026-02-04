@@ -5,7 +5,7 @@ import { Command } from 'commander';
 describe('CLI', () => {
   const defaultConfig: CliConfig = {
     version: '1.0.0',
-    name: 'gpx-cli',
+    name: 'drift',
   };
 
   describe('createCli', () => {
@@ -18,7 +18,7 @@ describe('CLI', () => {
     it('sets the program name', () => {
       const cli = createCli(defaultConfig);
 
-      expect(cli.name()).toBe('gpx-cli');
+      expect(cli.name()).toBe('drift');
     });
 
     it('sets the program version', () => {

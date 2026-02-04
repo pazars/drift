@@ -15,24 +15,24 @@ pnpm build
 
 ```bash
 # Process all GPX files in a directory
-gpx-cli process --input ./gpx-files --output ./processed --format flatgeobuf
+drift process --input ./gpx-files --output ./processed --format flatgeobuf
 
 # Sync only changed files (incremental processing)
-gpx-cli sync --input ./gpx-files --output ./processed
+drift sync --input ./gpx-files --output ./processed
 
 # Watch for new files and auto-process
-gpx-cli watch --input ./gpx-files --output ./processed
+drift watch --input ./gpx-files --output ./processed
 
 # Tag activities
-gpx-cli tag add hiking ./processed/activity.gpx
-gpx-cli tag define hiking --color "#4CAF50" --description "Hiking activities"
-gpx-cli tag list
+drift tag add hiking ./processed/activity.gpx
+drift tag define hiking --color "#4CAF50" --description "Hiking activities"
+drift tag list
 
 # Rebuild metadata index
-gpx-cli rebuild-index --input ./processed --output ./index.json
+drift rebuild-index --input ./processed --output ./index.json
 ```
 
-Run `gpx-cli --help` for all options.
+Run `drift --help` for all options.
 
 ## Development
 

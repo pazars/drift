@@ -9,7 +9,7 @@ import { createCli } from './cli.js';
 const VERSION = '0.0.1';
 
 const cli = createCli({
-  name: 'gpx-cli',
+  name: 'drift',
   version: VERSION,
 });
 

@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "gpx-cli": "./dist/bin.js"
+    "drift": "./dist/bin.js"
   },
   "scripts": {
     "build": "tsc",
