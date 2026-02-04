@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Test"
+  xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>Morning Ride</name>
+    <type>cycling</type>
+    <trkseg>
+      <trkpt lat="37.7749" lon="-122.4194">
+        <ele>10</ele>
+        <time>2024-01-15T08:00:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7751" lon="-122.4180">
+        <ele>15</ele>
+        <time>2024-01-15T08:01:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7760" lon="-122.4170">
+        <ele>25</ele>
+        <time>2024-01-15T08:02:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7775" lon="-122.4155">
+        <ele>20</ele>
+        <time>2024-01-15T08:03:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7790" lon="-122.4140">
+        <ele>12</ele>
+        <time>2024-01-15T08:04:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
