@@ -15,3 +15,5 @@ export type {
 export * from './watch.js';
 
 export * from './tag.js';
+
+export { buildIndex } from './build-index.js';
