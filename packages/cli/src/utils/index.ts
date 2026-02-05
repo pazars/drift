@@ -4,3 +4,4 @@
  */
 
 export { haversineDistance, distance3D } from './geo';
+export { generateActivityId } from './id';
