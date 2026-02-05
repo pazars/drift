@@ -4,6 +4,7 @@ import type { Activity, ActivityFilter } from '../types';
 export interface ActivityState {
   activities: Activity[];
   selectedActivityId: string | null;
+  hiddenActivityIds: Set<string>;
   filter: ActivityFilter;
   isLoading: boolean;
   error: string | null;
@@ -13,6 +14,9 @@ export interface ActivityState {
   addActivity: (activity: Activity) => void;
   removeActivity: (id: string) => void;
   selectActivity: (id: string | null) => void;
+  toggleActivityVisibility: (id: string) => void;
+  showAllActivities: () => void;
+  hideAllActivities: () => void;
   setFilter: (filter: ActivityFilter) => void;
   clearFilter: () => void;
   setLoading: (loading: boolean) => void;
@@ -21,16 +25,18 @@ export interface ActivityState {
   // Computed
   filteredActivities: () => Activity[];
   getSelectedActivity: () => Activity | undefined;
+  isActivityVisible: (id: string) => boolean;
 }
 
 export const useActivityStore = create<ActivityState>((set, get) => ({
   activities: [],
   selectedActivityId: null,
+  hiddenActivityIds: new Set<string>(),
   filter: {},
   isLoading: false,
   error: null,
 
-  setActivities: (activities) => set({ activities }),
+  setActivities: (activities) => set({ activities, hiddenActivityIds: new Set<string>() }),
 
   addActivity: (activity) => set((state) => ({ activities: [...state.activities, activity] })),
 
@@ -41,6 +47,24 @@ export const useActivityStore = create<ActivityState>((set, get) => ({
     })),
 
   selectActivity: (id) => set({ selectedActivityId: id }),
+
+  toggleActivityVisibility: (id) =>
+    set((state) => {
+      const newHidden = new Set(state.hiddenActivityIds);
+      if (newHidden.has(id)) {
+        newHidden.delete(id);
+      } else {
+        newHidden.add(id);
+      }
+      return { hiddenActivityIds: newHidden };
+    }),
+
+  showAllActivities: () => set({ hiddenActivityIds: new Set<string>() }),
+
+  hideAllActivities: () =>
+    set((state) => ({
+      hiddenActivityIds: new Set(state.activities.map((a) => a.id)),
+    })),
 
   setFilter: (filter) => set({ filter }),
 
@@ -101,4 +125,6 @@ export const useActivityStore = create<ActivityState>((set, get) => ({
     const { activities, selectedActivityId } = get();
     return activities.find((a) => a.id === selectedActivityId);
   },
+
+  isActivityVisible: (id) => !get().hiddenActivityIds.has(id),
 }));

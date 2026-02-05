@@ -8,8 +8,15 @@ import type { ActivityType } from '../../types';
 const ALL_SPORT_TYPES: ActivityType[] = ['run', 'ride', 'walk', 'hike', 'swim', 'ski', 'other'];
 
 export function SidebarPanel() {
-  const { filter, setFilter, filteredActivities, selectActivity, selectedActivityId } =
-    useActivityStore();
+  const {
+    filter,
+    setFilter,
+    filteredActivities,
+    selectActivity,
+    selectedActivityId,
+    hiddenActivityIds,
+    toggleActivityVisibility,
+  } = useActivityStore();
 
   const activities = filteredActivities();
 
@@ -57,7 +64,9 @@ export function SidebarPanel() {
         <ActivityList
           activities={activities}
           selectedActivityId={selectedActivityId}
+          hiddenActivityIds={hiddenActivityIds}
           onSelect={selectActivity}
+          onToggleVisibility={toggleActivityVisibility}
         />
       </div>
     </div>

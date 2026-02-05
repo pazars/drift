@@ -18,6 +18,7 @@ export function App() {
   // Subscribe to activities to trigger re-renders when data loads
   const storeActivities = useActivityStore((state) => state.activities);
   const storeFilter = useActivityStore((state) => state.filter);
+  const hiddenActivityIds = useActivityStore((state) => state.hiddenActivityIds);
 
   // Compute filtered activities with proper dependencies
   const activities = useMemo(() => {
@@ -69,10 +70,15 @@ export function App() {
     void loadActivities();
   }, [setActivities, setLoading, setError]);
 
-  // Create map layers from activities
+  // Create map layers from visible activities only
+  const visibleActivities = useMemo(
+    () => activities.filter((a) => !hiddenActivityIds.has(a.id)),
+    [activities, hiddenActivityIds]
+  );
+
   const layers = useMemo(
-    () => createActivityLayers(activities, selectedActivityId, (a) => selectActivity(a.id)),
-    [activities, selectedActivityId, selectActivity]
+    () => createActivityLayers(visibleActivities, selectedActivityId, (a) => selectActivity(a.id)),
+    [visibleActivities, selectedActivityId, selectActivity]
   );
 
   // Calculate combined bounds from all activities

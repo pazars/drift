@@ -5,10 +5,18 @@ import { ActivityListItem } from './ActivityListItem';
 export interface ActivityListProps {
   activities: Activity[];
   selectedActivityId?: string | null;
+  hiddenActivityIds?: Set<string>;
   onSelect?: (activityId: string) => void;
+  onToggleVisibility?: (activityId: string) => void;
 }
 
-export function ActivityList({ activities, selectedActivityId, onSelect }: ActivityListProps) {
+export function ActivityList({
+  activities,
+  selectedActivityId,
+  hiddenActivityIds,
+  onSelect,
+  onToggleVisibility,
+}: ActivityListProps) {
   const listRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = useCallback(
@@ -98,8 +106,10 @@ export function ActivityList({ activities, selectedActivityId, onSelect }: Activ
             key={activity.id}
             activity={activity}
             isSelected={activity.id === selectedActivityId}
+            isVisible={!hiddenActivityIds?.has(activity.id)}
             onClick={() => onSelect?.(activity.id)}
             onKeyDown={(e) => handleKeyDown(e, activity.id, index)}
+            onToggleVisibility={() => onToggleVisibility?.(activity.id)}
           />
         ))}
       </div>
