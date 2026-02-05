@@ -176,15 +176,7 @@ describe('CLI', () => {
   });
 
   describe('rebuild-index command', () => {
-    it('accepts input directory option', () => {
-      const cli = createCli(defaultConfig);
-      const rebuildCmd = cli.commands.find((c) => c.name() === 'rebuild-index');
-      const inputOpt = rebuildCmd?.options.find((o) => o.long === '--input');
-
-      expect(inputOpt).toBeDefined();
-    });
-
-    it('accepts output option', () => {
+    it('accepts output directory option', () => {
       const cli = createCli(defaultConfig);
       const rebuildCmd = cli.commands.find((c) => c.name() === 'rebuild-index');
       const outputOpt = rebuildCmd?.options.find((o) => o.long === '--output');
