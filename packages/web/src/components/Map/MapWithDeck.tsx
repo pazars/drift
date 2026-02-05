@@ -7,6 +7,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 // OpenFreeMap free tile source
 const DEFAULT_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
+const DEFAULT_CENTER: [number, number] = [0, 0];
+const DEFAULT_ZOOM = 2;
 
 export interface MapWithDeckProps {
   styleUrl?: string;
@@ -20,8 +22,8 @@ export interface MapWithDeckProps {
 
 export function MapWithDeck({
   styleUrl = DEFAULT_STYLE_URL,
-  initialCenter = [0, 0],
-  initialZoom = 2,
+  initialCenter = DEFAULT_CENTER,
+  initialZoom = DEFAULT_ZOOM,
   layers = [],
   bounds,
   onLayersChange,
