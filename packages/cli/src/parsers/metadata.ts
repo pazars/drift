@@ -3,8 +3,8 @@
  * @module parsers/metadata
  */
 
-import { haversineDistance } from '../utils/geo';
-import type { ParsedTrack, TrackPoint, ElevationStats, BoundingBox } from '../types';
+import { haversineDistance } from '../utils/geo.js';
+import type { ParsedTrack, TrackPoint, ElevationStats, BoundingBox } from '../types.js';
 
 /** Default elevation threshold in meters to filter GPS noise */
 const DEFAULT_ELEVATION_THRESHOLD = 2;

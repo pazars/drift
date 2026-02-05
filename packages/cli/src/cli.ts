@@ -7,10 +7,10 @@
 
 import { Command } from 'commander';
 import { join } from 'node:path';
-import { processGpxFile } from './processor';
-import { syncFiles, type FileProcessor, type ProcessResult } from './commands/sync';
-import { buildIndex } from './commands/build-index';
-import { createManifest, loadManifest, saveManifest } from './manifest';
+import { processGpxFile } from './processor.js';
+import { syncFiles, type FileProcessor, type ProcessResult } from './commands/sync.js';
+import { buildIndex } from './commands/build-index.js';
+import { createManifest, loadManifest, saveManifest } from './manifest/index.js';
 import {
   loadTagStore,
   saveTagStore,
@@ -19,8 +19,8 @@ import {
   getFileTags,
   getTagDefinitions,
   defineTag,
-} from './commands/tag';
-import { createWatcher, type ProcessResult as WatchProcessResult } from './commands/watch';
+} from './commands/tag.js';
+import { createWatcher, type ProcessResult as WatchProcessResult } from './commands/watch.js';
 
 /**
  * Configuration for creating the CLI.

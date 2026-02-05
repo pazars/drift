@@ -5,13 +5,13 @@
 
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { parseGPX } from './parsers';
-import { calculateMetadata } from './parsers/metadata';
-import { simplify3D } from './transforms';
-import { writeFlatGeobuf } from './writers/flatgeobuf';
-import { encodeFlexiblePolyline } from './writers/polyline';
-import { generateActivityId } from './utils';
-import type { ActivityMetadata, SportType } from './types';
+import { parseGPX } from './parsers/index.js';
+import { calculateMetadata } from './parsers/metadata.js';
+import { simplify3D } from './transforms/index.js';
+import { writeFlatGeobuf } from './writers/flatgeobuf.js';
+import { encodeFlexiblePolyline } from './writers/polyline.js';
+import { generateActivityId } from './utils/index.js';
+import type { ActivityMetadata, SportType } from './types.js';
 
 /** Default simplification tolerance in degrees (~11m) */
 const DEFAULT_SIMPLIFY_TOLERANCE = 0.0001;

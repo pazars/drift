@@ -6,14 +6,14 @@
 import { gpx } from '@tmcw/togeojson';
 import { XMLParser } from 'fast-xml-parser';
 import { DOMParser } from 'linkedom';
-import { GPXParseError, EmptyTrackError } from '../errors';
+import { GPXParseError, EmptyTrackError } from '../errors.js';
 import type {
   ParseResult,
   ParsedTrack,
   TrackSegment,
   TrackPoint,
   TrackPointExtensions,
-} from '../types';
+} from '../types.js';
 
 interface GPXTrackPoint {
   '@_lat': string;

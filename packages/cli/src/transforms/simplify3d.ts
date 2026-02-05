@@ -3,7 +3,7 @@
  * @module transforms/simplify3d
  */
 
-import type { TrackPoint } from '../types';
+import type { TrackPoint } from '../types.js';
 
 /** Default elevation weight factor */
 const DEFAULT_ELEVATION_WEIGHT = 1.0;

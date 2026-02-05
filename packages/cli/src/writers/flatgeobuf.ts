@@ -12,7 +12,7 @@ import type {
   Position,
   GeoJsonProperties,
 } from 'geojson';
-import type { TrackSegment, ActivityMetadata } from '../types';
+import type { TrackSegment, ActivityMetadata } from '../types.js';
 
 /**
  * Convert track segments to GeoJSON geometry.

@@ -3,8 +3,8 @@
  * @module transforms/segments
  */
 
-import { haversineDistance } from '../utils/geo';
-import type { TrackSegment } from '../types';
+import { haversineDistance } from '../utils/geo.js';
+import type { TrackSegment } from '../types.js';
 
 /** Default maximum time gap for merging (5 minutes) */
 const DEFAULT_MAX_TIME_GAP_SECONDS = 300;

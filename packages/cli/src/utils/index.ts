@@ -3,5 +3,5 @@
  * @module utils
  */
 
-export { haversineDistance, distance3D } from './geo';
-export { generateActivityId } from './id';
+export { haversineDistance, distance3D } from './geo.js';
+export { generateActivityId } from './id.js';

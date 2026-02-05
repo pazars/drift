@@ -11,7 +11,7 @@ import {
   calculateChecksum,
   needsProcessing,
   getFileEntry,
-} from '../manifest';
+} from '../manifest/index.js';
 
 /**
  * Result of processing a single file.

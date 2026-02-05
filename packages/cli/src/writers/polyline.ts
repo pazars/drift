@@ -4,7 +4,7 @@
  */
 
 import { encode, decode, ALTITUDE } from '@here/flexpolyline';
-import type { TrackPoint } from '../types';
+import type { TrackPoint } from '../types.js';
 
 /** Default precision for lat/lon coordinates (5 = ~1m accuracy) */
 const DEFAULT_PRECISION = 5;

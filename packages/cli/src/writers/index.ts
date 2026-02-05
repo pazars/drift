@@ -3,8 +3,8 @@
  * @module writers
  */
 
-export { writeFlatGeobuf, readFlatGeobuf } from './flatgeobuf';
-export { encodeFlexiblePolyline, decodeFlexiblePolyline } from './polyline';
-export type { PolylineEncodingOptions } from './polyline';
-export { createMetadataIndex, addToIndex, serializeIndex, deserializeIndex } from './metadata';
-export type { MetadataIndex } from './metadata';
+export { writeFlatGeobuf, readFlatGeobuf } from './flatgeobuf.js';
+export { encodeFlexiblePolyline, decodeFlexiblePolyline } from './polyline.js';
+export type { PolylineEncodingOptions } from './polyline.js';
+export { createMetadataIndex, addToIndex, serializeIndex, deserializeIndex } from './metadata.js';
+export type { MetadataIndex } from './metadata.js';

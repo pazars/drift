@@ -3,6 +3,6 @@
  * @module parsers
  */
 
-export { parseGPX } from './gpx';
-export { calculateMetadata } from './metadata';
-export type { CalculatedMetadata } from './metadata';
+export { parseGPX } from './gpx.js';
+export { calculateMetadata } from './metadata.js';
+export type { CalculatedMetadata } from './metadata.js';

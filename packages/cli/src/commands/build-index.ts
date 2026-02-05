@@ -5,10 +5,10 @@
 
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { readFlatGeobuf } from '../writers/flatgeobuf';
-import { createMetadataIndex, serializeIndex } from '../writers/metadata';
-import { loadTagStore, getFileTags } from './tag';
-import type { ActivityMetadata, SportType } from '../types';
+import { readFlatGeobuf } from '../writers/flatgeobuf.js';
+import { createMetadataIndex, serializeIndex } from '../writers/metadata.js';
+import { loadTagStore, getFileTags } from './tag.js';
+import type { ActivityMetadata, SportType } from '../types.js';
 
 /**
  * Build index.json from existing FlatGeobuf files.

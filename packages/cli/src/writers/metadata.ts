@@ -3,7 +3,7 @@
  * @module writers/metadata
  */
 
-import type { ActivityMetadata } from '../types';
+import type { ActivityMetadata } from '../types.js';
 
 /** Current index schema version */
 const INDEX_VERSION = 1;

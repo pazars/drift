@@ -8,19 +8,19 @@
 export const VERSION = '0.0.1';
 
 // Parser exports
-export { parseGPX, calculateMetadata } from './parsers';
-export type { CalculatedMetadata } from './parsers';
+export { parseGPX, calculateMetadata } from './parsers/index.js';
+export type { CalculatedMetadata } from './parsers/index.js';
 
 // Transform exports
-export { simplify3D, perpendicularDistance3D } from './transforms';
+export { simplify3D, perpendicularDistance3D } from './transforms/index.js';
 
 // Error exports
-export { DriftError, GPXParseError, EmptyTrackError, InvalidCoordinatesError } from './errors';
+export { DriftError, GPXParseError, EmptyTrackError, InvalidCoordinatesError } from './errors.js';
 export type {
   GPXParseErrorOptions,
   EmptyTrackErrorOptions,
   InvalidCoordinatesErrorOptions,
-} from './errors';
+} from './errors.js';
 
 // Processor exports
 export { processGpxFile } from './processor.js';
@@ -44,4 +44,4 @@ export type {
   BoundingBox,
   SportType,
   ActivityMetadata,
-} from './types';
+} from './types.js';
