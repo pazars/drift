@@ -13,12 +13,41 @@ export function App() {
   const setActivities = useActivityStore((state) => state.setActivities);
   const setLoading = useActivityStore((state) => state.setLoading);
   const setError = useActivityStore((state) => state.setError);
-  const filteredActivities = useActivityStore((state) => state.filteredActivities);
-  const activityCount = filteredActivities().length;
-
-  const activities = filteredActivities();
   const selectedActivityId = useActivityStore((state) => state.selectedActivityId);
   const selectActivity = useActivityStore((state) => state.selectActivity);
+  // Subscribe to activities to trigger re-renders when data loads
+  const storeActivities = useActivityStore((state) => state.activities);
+  const storeFilter = useActivityStore((state) => state.filter);
+
+  // Compute filtered activities with proper dependencies
+  const activities = useMemo(() => {
+    return storeActivities.filter((activity) => {
+      if (storeFilter.types !== undefined && !storeFilter.types.includes(activity.type)) {
+        return false;
+      }
+      if (storeFilter.minDistance !== undefined && activity.distance < storeFilter.minDistance) {
+        return false;
+      }
+      if (storeFilter.maxDistance !== undefined && activity.distance > storeFilter.maxDistance) {
+        return false;
+      }
+      if (storeFilter.tags && storeFilter.tags.length > 0) {
+        if (!activity.tags || !storeFilter.tags.some((tag) => activity.tags?.includes(tag))) {
+          return false;
+        }
+      }
+      if (storeFilter.dateRange) {
+        const activityDate = new Date(activity.date);
+        const startDate = new Date(storeFilter.dateRange.start);
+        const endDate = new Date(storeFilter.dateRange.end);
+        if (activityDate < startDate || activityDate > endDate) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [storeActivities, storeFilter]);
+  const activityCount = activities.length;
 
   useEffect(() => {
     async function loadActivities() {

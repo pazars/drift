@@ -31,7 +31,8 @@ export function MapWithDeck({
 }: MapWithDeckProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<Map | null>(null);
-  const overlayRef = useRef<MapboxOverlay | null>(null);
+  // Use state for overlay so React properly tracks when it's available
+  const [overlay, setOverlay] = useState<MapboxOverlay | null>(null);
   const [isReady, setIsReady] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
@@ -57,7 +58,7 @@ export function MapWithDeck({
 
     map.on('load', () => {
       map.addControl(overlay as unknown as maplibregl.IControl);
-      overlayRef.current = overlay;
+      setOverlay(overlay);
       setIsReady(true);
     });
 
@@ -73,24 +74,18 @@ export function MapWithDeck({
       overlay.finalize();
       map.remove();
       mapRef.current = null;
-      overlayRef.current = null;
+      setOverlay(null);
       setIsReady(false);
     };
   }, [styleUrl, initialCenter, initialZoom, onError, prefersReducedMotion]);
 
-  // Update layers when they change or when map becomes ready
+  // Update layers when they change or when overlay becomes available
   useEffect(() => {
-    if (isReady && overlayRef.current && layers.length > 0) {
-      // Use requestAnimationFrame to ensure overlay is fully initialized
-      const frameId = requestAnimationFrame(() => {
-        if (overlayRef.current) {
-          overlayRef.current.setProps({ layers });
-          onLayersChange?.(layers);
-        }
-      });
-      return () => cancelAnimationFrame(frameId);
+    if (overlay) {
+      overlay.setProps({ layers });
+      onLayersChange?.(layers);
     }
-  }, [isReady, layers, onLayersChange]);
+  }, [overlay, layers, onLayersChange]);
 
   // Fit map to bounds when they change or when map becomes ready
   useEffect(() => {
