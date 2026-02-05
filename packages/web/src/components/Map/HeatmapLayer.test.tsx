@@ -58,13 +58,13 @@ describe('createHeatmapLayers', () => {
   it('uses default line width when not specified', () => {
     const layers = createHeatmapLayers({ activities: mockActivities });
     expect(layers).toHaveLength(2);
-    // Default lineWidthMeters is 4
+    // Default lineWidthPixels is 3
   });
 
   it('accepts custom line width', () => {
     const layers = createHeatmapLayers({
       activities: mockActivities,
-      lineWidthMeters: 10,
+      lineWidthPixels: 5,
     });
     expect(layers).toHaveLength(2);
   });

@@ -26,7 +26,7 @@ function decodePolyline(encoded: string): [number, number][] {
 export interface CreateHeatmapLayerOptions {
   activities: Activity[];
   id?: string;
-  lineWidthMeters?: number;
+  lineWidthPixels?: number;
 }
 
 /**
@@ -35,7 +35,7 @@ export interface CreateHeatmapLayerOptions {
  * creating a natural intensity visualization.
  */
 export function createHeatmapLayers(options: CreateHeatmapLayerOptions): PathLayer<PathData>[] {
-  const { activities, id = 'heatmap', lineWidthMeters = 4 } = options;
+  const { activities, id = 'heatmap', lineWidthPixels = 3 } = options;
 
   if (activities.length === 0) {
     return [];
@@ -49,9 +49,8 @@ export function createHeatmapLayers(options: CreateHeatmapLayerOptions): PathLay
       data: [{ path, activity }],
       getPath: (d) => d.path,
       getColor: () => HEATMAP_COLOR,
-      getWidth: () => lineWidthMeters,
-      widthUnits: 'meters',
-      widthMinPixels: 1,
+      getWidth: () => lineWidthPixels,
+      widthUnits: 'pixels',
       capRounded: true,
       jointRounded: true,
       // Disable picking for better performance

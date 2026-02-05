@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "pipelineVersion": "1.0.0",
+  "createdAt": "2026-02-05T06:51:54.494Z",
+  "updatedAt": "2026-02-05T06:51:55.621Z",
+  "files": {
+    "/var/home/user/Documents/drift/packages/cli/gpx_data/Afternoon_Run.gpx": {
+      "checksum": "0f4ae90b49a64a4849ff97f5bce8a4d3c6c5063b87c6f72431b412e044652502",
+      "status": "processed",
+      "addedAt": "2026-02-05T06:51:54.511Z",
+      "processedAt": "2026-02-05T06:51:54.843Z"
+    },
+    "/var/home/user/Documents/drift/packages/cli/gpx_data/Afternoon_Run2.gpx": {
+      "checksum": "396a6f0cb53df495d3253d133cccaf964d5d8c861accaa2e2b16f4f561d86b23",
+      "status": "processed",
+      "addedAt": "2026-02-05T06:51:54.845Z",
+      "processedAt": "2026-02-05T06:51:55.069Z"
+    },
+    "/var/home/user/Documents/drift/packages/cli/gpx_data/Morning_Run.gpx": {
+      "checksum": "525a1bfb2ff5866f3cd888a434f2d2153e89c0530f6f79ba40686cc1cf6cdbd8",
+      "status": "processed",
+      "addedAt": "2026-02-05T06:51:55.072Z",
+      "processedAt": "2026-02-05T06:51:55.621Z"
+    }
+  }
+}
