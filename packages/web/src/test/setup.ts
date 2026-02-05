@@ -11,6 +11,13 @@ class MockMap {
     void options.container;
   }
 
+  fitBounds(
+    _bounds: [[number, number], [number, number]],
+    _options?: { padding?: number; duration?: number }
+  ): this {
+    return this;
+  }
+
   on(event: string, handler: (...args: unknown[]) => void): this {
     if (!this.handlers.has(event)) {
       this.handlers.set(event, []);

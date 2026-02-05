@@ -13,6 +13,7 @@ export interface MapWithDeckProps {
   initialCenter?: [number, number];
   initialZoom?: number;
   layers?: Layer[];
+  bounds?: { north: number; south: number; east: number; west: number };
   onLayersChange?: (layers: Layer[]) => void;
   onError?: (error: Error) => void;
 }
@@ -22,6 +23,7 @@ export function MapWithDeck({
   initialCenter = [0, 0],
   initialZoom = 2,
   layers = [],
+  bounds,
   onLayersChange,
   onError,
 }: MapWithDeckProps) {
@@ -78,6 +80,19 @@ export function MapWithDeck({
       onLayersChange?.(layers);
     }
   }, [layers, onLayersChange]);
+
+  // Fit map to bounds when they change
+  useEffect(() => {
+    if (mapRef.current && bounds) {
+      mapRef.current.fitBounds(
+        [
+          [bounds.west, bounds.south],
+          [bounds.east, bounds.north],
+        ],
+        { padding: 50, duration: 0 }
+      );
+    }
+  }, [bounds]);
 
   return (
     <div
