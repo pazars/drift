@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Map, NavigationControl } from 'maplibre-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import type { Layer } from '@deck.gl/core';
@@ -32,13 +32,8 @@ export function MapWithDeck({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<Map | null>(null);
   const overlayRef = useRef<MapboxOverlay | null>(null);
-  const layersRef = useRef<Layer[]>(layers);
-  const boundsRef = useRef(bounds);
+  const [isReady, setIsReady] = useState(false);
   const prefersReducedMotion = useReducedMotion();
-
-  // Keep refs in sync with props
-  layersRef.current = layers;
-  boundsRef.current = bounds;
 
   // Initialize map and deck.gl overlay
   useEffect(() => {
@@ -63,20 +58,7 @@ export function MapWithDeck({
     map.on('load', () => {
       map.addControl(overlay as unknown as maplibregl.IControl);
       overlayRef.current = overlay;
-
-      // Apply any layers/bounds that were set before the map loaded
-      if (layersRef.current.length > 0) {
-        overlay.setProps({ layers: layersRef.current });
-      }
-      if (boundsRef.current) {
-        map.fitBounds(
-          [
-            [boundsRef.current.west, boundsRef.current.south],
-            [boundsRef.current.east, boundsRef.current.north],
-          ],
-          { padding: 50, duration: 0 }
-        );
-      }
+      setIsReady(true);
     });
 
     map.on('error', (e) => {
@@ -92,20 +74,21 @@ export function MapWithDeck({
       map.remove();
       mapRef.current = null;
       overlayRef.current = null;
+      setIsReady(false);
     };
   }, [styleUrl, initialCenter, initialZoom, onError, prefersReducedMotion]);
 
-  // Update layers when they change
+  // Update layers when they change or when map becomes ready
   useEffect(() => {
-    if (overlayRef.current) {
+    if (isReady && overlayRef.current) {
       overlayRef.current.setProps({ layers });
       onLayersChange?.(layers);
     }
-  }, [layers, onLayersChange]);
+  }, [isReady, layers, onLayersChange]);
 
-  // Fit map to bounds when they change
+  // Fit map to bounds when they change or when map becomes ready
   useEffect(() => {
-    if (mapRef.current && bounds) {
+    if (isReady && mapRef.current && bounds) {
       mapRef.current.fitBounds(
         [
           [bounds.west, bounds.south],
@@ -114,7 +97,7 @@ export function MapWithDeck({
         { padding: 50, duration: 0 }
       );
     }
-  }, [bounds]);
+  }, [isReady, bounds]);
 
   return (
     <div
