@@ -107,3 +107,41 @@ describe('SportFilter', () => {
     expect(status).toHaveAttribute('aria-live', 'polite');
   });
 });
+
+describe('SportFilter with availableTypes', () => {
+  it('only renders available types when specified', () => {
+    render(<SportFilter selectedTypes={[]} availableTypes={['run', 'ride']} onChange={() => {}} />);
+
+    expect(screen.getByLabelText(/run/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/ride/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/walk/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/hike/i)).not.toBeInTheDocument();
+  });
+
+  it('Select All only selects available types', () => {
+    const onChange = vi.fn();
+    render(
+      <SportFilter
+        selectedTypes={['run']}
+        availableTypes={['run', 'ride', 'walk']}
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /select all/i }));
+
+    expect(onChange).toHaveBeenCalledWith(['run', 'ride', 'walk']);
+  });
+
+  it('shows "All selected" when all available types are selected', () => {
+    render(
+      <SportFilter
+        selectedTypes={['run', 'ride']}
+        availableTypes={['run', 'ride']}
+        onChange={() => {}}
+      />
+    );
+
+    expect(screen.getByText(/all selected/i)).toBeInTheDocument();
+  });
+});

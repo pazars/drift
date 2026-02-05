@@ -3,6 +3,7 @@ import { getActivityColor } from '../../utils/colors';
 
 export interface SportFilterProps {
   selectedTypes: ActivityType[];
+  availableTypes?: ActivityType[];
   onChange: (types: ActivityType[]) => void;
 }
 
@@ -18,7 +19,10 @@ const SPORT_LABELS: Record<ActivityType, string> = {
   other: 'Other',
 };
 
-export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
+export function SportFilter({ selectedTypes, availableTypes, onChange }: SportFilterProps) {
+  // Only show types that exist in the data, or all types if not specified
+  const displayTypes = availableTypes ?? ALL_SPORT_TYPES;
+
   const handleToggle = (type: ActivityType) => {
     if (selectedTypes.includes(type)) {
       onChange(selectedTypes.filter((t) => t !== type));
@@ -28,7 +32,7 @@ export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
   };
 
   const handleSelectAll = () => {
-    onChange([...ALL_SPORT_TYPES]);
+    onChange([...displayTypes]);
   };
 
   const handleClearAll = () => {
@@ -39,7 +43,7 @@ export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
     if (selectedTypes.length === 0) {
       return 'None selected';
     }
-    if (selectedTypes.length === ALL_SPORT_TYPES.length) {
+    if (selectedTypes.length === displayTypes.length) {
       return 'All selected';
     }
     return `${selectedTypes.length} selected`;
@@ -55,7 +59,7 @@ export function SportFilter({ selectedTypes, onChange }: SportFilterProps) {
       </div>
 
       <div className="space-y-2 mb-3" role="group" aria-label="Sport type filters">
-        {ALL_SPORT_TYPES.map((type) => (
+        {displayTypes.map((type) => (
           <label
             key={type}
             className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"

@@ -2,9 +2,27 @@ import { useEffect, useMemo } from 'react';
 import { MapWithDeck, MapErrorBoundary, createActivityLayers } from './components/Map';
 import { Layout } from './components/Layout';
 import { SidebarPanel } from './components/Sidebar';
-import { useActivityStore } from './stores/activityStore';
+import { useActivityStore, type SkippedActivity } from './stores/activityStore';
 import { transformCliActivity, calculateCombinedBounds } from './utils/transform';
-import type { CliIndex } from './utils/transform';
+import type { CliIndex, CliActivity } from './utils/transform';
+import type { Activity } from './types';
+
+/**
+ * Check if an activity has GPS data (non-empty polyline).
+ */
+function hasGpsData(activity: Activity): boolean {
+  return activity.polyline !== undefined && activity.polyline.length > 0;
+}
+
+/**
+ * Get the reason why an activity was skipped.
+ */
+function getSkipReason(cliActivity: CliActivity): string {
+  if (!cliActivity.overviewPolyline || cliActivity.overviewPolyline.length === 0) {
+    return 'No GPS data (treadmill, indoor, or manual entry)';
+  }
+  return 'Unknown';
+}
 
 /**
  * Main application component.
@@ -59,8 +77,30 @@ export function App() {
           throw new Error(`Failed to load: ${response.statusText}`);
         }
         const data = (await response.json()) as CliIndex;
-        const loaded = data.activities.map(transformCliActivity);
-        setActivities(loaded);
+
+        // Transform all activities and separate GPS from non-GPS
+        const allTransformed = data.activities.map((cliActivity) => ({
+          activity: transformCliActivity(cliActivity),
+          cliActivity,
+        }));
+
+        const withGps: Activity[] = [];
+        const skipped: SkippedActivity[] = [];
+
+        for (const { activity, cliActivity } of allTransformed) {
+          if (hasGpsData(activity)) {
+            withGps.push(activity);
+          } else {
+            skipped.push({
+              id: activity.id,
+              name: activity.name,
+              date: activity.date,
+              reason: getSkipReason(cliActivity),
+            });
+          }
+        }
+
+        setActivities(withGps, skipped);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load activities');
       } finally {

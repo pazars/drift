@@ -1,8 +1,16 @@
 import { create } from 'zustand';
 import type { Activity, ActivityFilter } from '../types';
 
+export interface SkippedActivity {
+  id: string;
+  name: string;
+  date: string;
+  reason: string;
+}
+
 export interface ActivityState {
   activities: Activity[];
+  skippedActivities: SkippedActivity[];
   selectedActivityId: string | null;
   hiddenActivityIds: Set<string>;
   filter: ActivityFilter;
@@ -10,7 +18,7 @@ export interface ActivityState {
   error: string | null;
 
   // Actions
-  setActivities: (activities: Activity[]) => void;
+  setActivities: (activities: Activity[], skipped?: SkippedActivity[]) => void;
   addActivity: (activity: Activity) => void;
   removeActivity: (id: string) => void;
   selectActivity: (id: string | null) => void;
@@ -30,13 +38,15 @@ export interface ActivityState {
 
 export const useActivityStore = create<ActivityState>((set, get) => ({
   activities: [],
+  skippedActivities: [],
   selectedActivityId: null,
   hiddenActivityIds: new Set<string>(),
   filter: {},
   isLoading: false,
   error: null,
 
-  setActivities: (activities) => set({ activities, hiddenActivityIds: new Set<string>() }),
+  setActivities: (activities, skipped = []) =>
+    set({ activities, skippedActivities: skipped, hiddenActivityIds: new Set<string>() }),
 
   addActivity: (activity) => set((state) => ({ activities: [...state.activities, activity] })),
 

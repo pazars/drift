@@ -20,7 +20,7 @@ describe('ElevationStats', () => {
 
     render(<ElevationStats activities={activities} />);
 
-    expect(screen.getByText(/total elevation/i)).toBeInTheDocument();
+    expect(screen.getByText(/total elevation gain/i)).toBeInTheDocument();
   });
 
   it('calculates total elevation from activities', () => {

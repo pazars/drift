@@ -8,3 +8,4 @@ export {
   type CliElevation,
   type CliSportType,
 } from './transform';
+export { groupActivitiesByMonth, type MonthGroup } from './groupActivities';
