@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Map, NavigationControl } from 'maplibre-gl';
 import { MapboxOverlay } from '@deck.gl/mapbox';
 import type { Layer } from '@deck.gl/core';
@@ -30,6 +30,7 @@ export function MapWithDeck({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<Map | null>(null);
   const overlayRef = useRef<MapboxOverlay | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   // Initialize map and deck.gl overlay
@@ -55,6 +56,7 @@ export function MapWithDeck({
     map.on('load', () => {
       map.addControl(overlay as unknown as maplibregl.IControl);
       overlayRef.current = overlay;
+      setMapLoaded(true);
     });
 
     map.on('error', (e) => {
@@ -70,6 +72,7 @@ export function MapWithDeck({
       map.remove();
       mapRef.current = null;
       overlayRef.current = null;
+      setMapLoaded(false);
     };
   }, [styleUrl, initialCenter, initialZoom, onError, prefersReducedMotion]);
 
@@ -81,9 +84,9 @@ export function MapWithDeck({
     }
   }, [layers, onLayersChange]);
 
-  // Fit map to bounds when they change
+  // Fit map to bounds when they change (only after map is loaded)
   useEffect(() => {
-    if (mapRef.current && bounds) {
+    if (mapLoaded && mapRef.current && bounds) {
       mapRef.current.fitBounds(
         [
           [bounds.west, bounds.south],
@@ -92,7 +95,7 @@ export function MapWithDeck({
         { padding: 50, duration: 0 }
       );
     }
-  }, [bounds]);
+  }, [mapLoaded, bounds]);
 
   return (
     <div
