@@ -1,5 +1,13 @@
-import { useEffect, useMemo } from 'react';
-import { MapWithDeck, MapErrorBoundary, createActivityLayers } from './components/Map';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  MapWithDeck,
+  MapErrorBoundary,
+  createActivityLayers,
+  createHeatmapLayers,
+  ViewModeToggle,
+  HeatmapLegend,
+  type ViewMode,
+} from './components/Map';
 import { Layout } from './components/Layout';
 import { SidebarPanel } from './components/Sidebar';
 import { useActivityStore, type SkippedActivity } from './stores/activityStore';
@@ -110,16 +118,21 @@ export function App() {
     void loadActivities();
   }, [setActivities, setLoading, setError]);
 
+  // View mode state (tracks or heatmap)
+  const [viewMode, setViewMode] = useState<ViewMode>('tracks');
+
   // Create map layers from visible activities only
   const visibleActivities = useMemo(
     () => activities.filter((a) => !hiddenActivityIds.has(a.id)),
     [activities, hiddenActivityIds]
   );
 
-  const layers = useMemo(
-    () => createActivityLayers(visibleActivities, selectedActivityId, (a) => selectActivity(a.id)),
-    [visibleActivities, selectedActivityId, selectActivity]
-  );
+  const layers = useMemo(() => {
+    if (viewMode === 'heatmap') {
+      return createHeatmapLayers({ activities: visibleActivities });
+    }
+    return createActivityLayers(visibleActivities, selectedActivityId, (a) => selectActivity(a.id));
+  }, [viewMode, visibleActivities, selectedActivityId, selectActivity]);
 
   // Calculate combined bounds from all activities
   const bounds = useMemo(() => calculateCombinedBounds(activities), [activities]);
@@ -128,6 +141,10 @@ export function App() {
     <Layout sidebar={<SidebarPanel />} activityCount={activityCount}>
       <MapErrorBoundary>
         <MapWithDeck layers={layers} bounds={bounds} />
+        <div className="absolute top-4 left-4 z-10 flex flex-col items-start gap-2">
+          <ViewModeToggle mode={viewMode} onChange={setViewMode} />
+          {viewMode === 'heatmap' && <HeatmapLegend />}
+        </div>
       </MapErrorBoundary>
     </Layout>
   );

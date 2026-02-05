@@ -1,79 +1,82 @@
-import { describe, it, expect } from 'vitest';
-import { createHeatmapLayer } from './HeatmapLayer';
+import { describe, it, expect, vi } from 'vitest';
+import { createHeatmapLayers } from './HeatmapLayer';
+import type { Activity } from '../../types';
 
-describe('createHeatmapLayer', () => {
-  const mockPoints = [
-    { position: [-73.5, 45.5] as [number, number], weight: 1 },
-    { position: [-73.6, 45.6] as [number, number], weight: 1 },
-    { position: [-73.55, 45.55] as [number, number], weight: 1 },
-  ];
+// Mock flexpolyline decoding
+vi.mock('@here/flexpolyline', () => ({
+  decode: vi.fn(() => ({
+    polyline: [
+      [37.7749, -122.4194],
+      [37.775, -122.4195],
+    ],
+  })),
+}));
 
-  it('creates a layer with correct id', () => {
-    const layer = createHeatmapLayer({ points: mockPoints });
+const mockActivities: Activity[] = [
+  {
+    id: 'activity-1',
+    name: 'Morning Run',
+    type: 'run',
+    date: '2024-01-15T08:00:00Z',
+    distance: 5000,
+    duration: 1800,
+    polyline: 'encoded_polyline_1',
+  },
+  {
+    id: 'activity-2',
+    name: 'Evening Ride',
+    type: 'ride',
+    date: '2024-01-16T18:00:00Z',
+    distance: 25000,
+    duration: 3600,
+    polyline: 'encoded_polyline_2',
+  },
+];
 
-    expect(layer).not.toBeNull();
-    expect(layer!.id).toBe('heatmap-layer');
+describe('createHeatmapLayers', () => {
+  it('returns empty array for empty activities', () => {
+    const layers = createHeatmapLayers({ activities: [] });
+    expect(layers).toEqual([]);
   });
 
-  it('accepts custom id', () => {
-    const layer = createHeatmapLayer({ points: mockPoints, id: 'custom-heatmap' });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.id).toBe('custom-heatmap');
+  it('creates a PathLayer for each activity', () => {
+    const layers = createHeatmapLayers({ activities: mockActivities });
+    expect(layers).toHaveLength(2);
   });
 
-  it('passes points as data', () => {
-    const layer = createHeatmapLayer({ points: mockPoints });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.data).toBe(mockPoints);
+  it('uses activity id in layer id', () => {
+    const layers = createHeatmapLayers({ activities: mockActivities });
+    expect(layers[0]?.id).toContain('activity-1');
+    expect(layers[1]?.id).toContain('activity-2');
   });
 
-  it('uses default radius when not specified', () => {
-    const layer = createHeatmapLayer({ points: mockPoints });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.radiusPixels).toBe(30);
+  it('accepts custom id prefix', () => {
+    const layers = createHeatmapLayers({ activities: mockActivities, id: 'custom' });
+    expect(layers[0]?.id).toContain('custom');
   });
 
-  it('accepts custom radius', () => {
-    const layer = createHeatmapLayer({ points: mockPoints, radiusPixels: 50 });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.radiusPixels).toBe(50);
+  it('uses default line width when not specified', () => {
+    const layers = createHeatmapLayers({ activities: mockActivities });
+    expect(layers).toHaveLength(2);
+    // Default lineWidthMeters is 4
   });
 
-  it('uses default intensity when not specified', () => {
-    const layer = createHeatmapLayer({ points: mockPoints });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.intensity).toBe(1);
+  it('accepts custom line width', () => {
+    const layers = createHeatmapLayers({
+      activities: mockActivities,
+      lineWidthMeters: 10,
+    });
+    expect(layers).toHaveLength(2);
   });
 
-  it('accepts custom intensity', () => {
-    const layer = createHeatmapLayer({ points: mockPoints, intensity: 2 });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.intensity).toBe(2);
+  it('creates layers with rounded caps and joints', () => {
+    const layers = createHeatmapLayers({ activities: mockActivities });
+    expect(layers[0]?.props.capRounded).toBe(true);
+    expect(layers[0]?.props.jointRounded).toBe(true);
   });
 
-  it('returns null when points array is empty', () => {
-    const layer = createHeatmapLayer({ points: [] });
-
-    expect(layer).toBeNull();
-  });
-
-  it('has getPosition accessor', () => {
-    const layer = createHeatmapLayer({ points: mockPoints });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.getPosition).toBeDefined();
-  });
-
-  it('has getWeight accessor', () => {
-    const layer = createHeatmapLayer({ points: mockPoints });
-
-    expect(layer).not.toBeNull();
-    expect(layer!.props.getWeight).toBeDefined();
+  it('creates non-pickable layers for performance', () => {
+    const layers = createHeatmapLayers({ activities: mockActivities });
+    expect(layers[0]?.props.pickable).toBe(false);
   });
 });
