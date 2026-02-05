@@ -2,17 +2,15 @@ import { describe, it, expect, vi } from 'vitest';
 import { createActivityLayers } from './ActivityLayer';
 import type { Activity } from '../../types';
 
-// Mock polyline decoding
-vi.mock('@mapbox/polyline', () => ({
-  default: {
-    decode: vi.fn((_polyline: string) => {
-      // Return simple mock coordinates [lat, lng] format
-      return [
-        [37.7749, -122.4194],
-        [37.775, -122.4195],
-      ];
-    }),
-  },
+// Mock flexpolyline decoding
+vi.mock('@here/flexpolyline', () => ({
+  decode: vi.fn((_polyline: string) => ({
+    // Return simple mock coordinates [lat, lng, alt?] format
+    polyline: [
+      [37.7749, -122.4194],
+      [37.775, -122.4195],
+    ],
+  })),
 }));
 
 const mockActivities: Activity[] = [

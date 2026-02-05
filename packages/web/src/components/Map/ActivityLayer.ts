@@ -1,5 +1,5 @@
 import { PathLayer } from '@deck.gl/layers';
-import polyline from '@mapbox/polyline';
+import { decode } from '@here/flexpolyline';
 import type { Activity } from '../../types';
 import { getActivityColorRGB } from '../../utils/colors';
 
@@ -14,12 +14,12 @@ interface PathData {
 }
 
 /**
- * Decode polyline and convert to deck.gl path format [lng, lat].
+ * Decode Flexible Polyline and convert to deck.gl path format [lng, lat].
  */
 function decodePolyline(encoded: string): [number, number][] {
-  const decoded = polyline.decode(encoded);
-  // Polyline returns [lat, lng], deck.gl expects [lng, lat]
-  return decoded.map(([lat, lng]) => [lng, lat] as [number, number]);
+  const result = decode(encoded);
+  // Flexible Polyline returns { polyline: [[lat, lng, alt?], ...] }
+  return result.polyline.map(([lat, lng]) => [lng, lat] as [number, number]);
 }
 
 /**
