@@ -39,7 +39,10 @@ function createProcessor(): FileProcessor {
   return async (inputPath: string, outputDir: string): Promise<ProcessResult> => {
     try {
       const result = await processGpxFile({ inputPath, outputDir });
-      return { success: true, outputPath: result.metadata.geometryFile };
+      return {
+        success: true,
+        ...(result.metadata.geometryFile && { outputPath: result.metadata.geometryFile }),
+      };
     } catch (err) {
       return { success: false, error: err instanceof Error ? err.message : String(err) };
     }
@@ -267,7 +270,7 @@ export function createCli(config: CliConfig): Command {
         let store = await loadTagStore(tagsFile);
         store = defineTag(store, tag, {
           color: options.color ?? '#808080',
-          description: options.description,
+          ...(options.description && { description: options.description }),
         });
         await saveTagStore(store, tagsFile);
         console.log(`Defined tag "${tag}"`);
