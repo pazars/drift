@@ -78,13 +78,13 @@ export function MapWithDeck({
     };
   }, [styleUrl, initialCenter, initialZoom, onError, prefersReducedMotion]);
 
-  // Update layers when they change
+  // Update layers when they change (only after map is loaded)
   useEffect(() => {
-    if (overlayRef.current) {
+    if (mapLoaded && overlayRef.current) {
       overlayRef.current.setProps({ layers });
       onLayersChange?.(layers);
     }
-  }, [layers, onLayersChange]);
+  }, [mapLoaded, layers, onLayersChange]);
 
   // Fit map to bounds when they change (only after map is loaded)
   useEffect(() => {
