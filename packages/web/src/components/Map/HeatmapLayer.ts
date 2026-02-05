@@ -52,7 +52,6 @@ export function createHeatmapLayers(options: CreateHeatmapLayerOptions): PathLay
       getWidth: () => lineWidthMeters,
       widthUnits: 'meters',
       widthMinPixels: 1,
-      widthMaxPixels: 8,
       capRounded: true,
       jointRounded: true,
       // Disable picking for better performance

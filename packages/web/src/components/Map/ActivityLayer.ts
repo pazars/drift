@@ -3,8 +3,9 @@ import { decode } from '@here/flexpolyline';
 import type { Activity } from '../../types';
 import { getActivityColorRGB } from '../../utils/colors';
 
-const DEFAULT_LINE_WIDTH = 3;
-const SELECTED_LINE_WIDTH = 5;
+// Line widths in meters for zoom-based scaling
+const DEFAULT_LINE_WIDTH_METERS = 4;
+const SELECTED_LINE_WIDTH_METERS = 6;
 const DEFAULT_OPACITY = 200;
 const UNSELECTED_OPACITY = 150;
 
@@ -47,8 +48,9 @@ export function createActivityLayers(
       data: [{ path, activity }],
       getPath: (d) => d.path,
       getColor: () => color,
-      getWidth: () => (isSelected ? SELECTED_LINE_WIDTH : DEFAULT_LINE_WIDTH),
-      widthUnits: 'pixels',
+      getWidth: () => (isSelected ? SELECTED_LINE_WIDTH_METERS : DEFAULT_LINE_WIDTH_METERS),
+      widthUnits: 'meters',
+      widthMinPixels: 1,
       pickable: !!onActivityClick,
       onClick: onActivityClick
         ? (info) => {
