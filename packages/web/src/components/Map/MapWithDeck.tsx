@@ -13,7 +13,7 @@ export interface MapWithDeckProps {
   initialCenter?: [number, number];
   initialZoom?: number;
   layers?: Layer[];
-  bounds?: { north: number; south: number; east: number; west: number };
+  bounds?: { north: number; south: number; east: number; west: number } | undefined;
   onLayersChange?: (layers: Layer[]) => void;
   onError?: (error: Error) => void;
 }

@@ -71,7 +71,9 @@ describe('MapWithDeck', () => {
 
     beforeEach(() => {
       mockFitBounds = vi.fn().mockReturnThis();
-      vi.spyOn(maplibre.Map.prototype, 'fitBounds').mockImplementation(mockFitBounds);
+      vi.spyOn(maplibre.Map.prototype, 'fitBounds').mockImplementation(
+        mockFitBounds as typeof maplibre.Map.prototype.fitBounds
+      );
     });
 
     afterEach(() => {
