@@ -22,6 +22,17 @@ export type {
   InvalidCoordinatesErrorOptions,
 } from './errors';
 
+// Processor exports
+export { processGpxFile } from './processor.js';
+export type { ProcessorOptions, ProcessedActivity } from './processor.js';
+
+// Command exports
+export { syncFiles, scanDirectory, buildIndex } from './commands/index.js';
+export type { SyncOptions, SyncResult, FileProcessor, ProcessResult } from './commands/index.js';
+
+// Utility exports
+export { generateActivityId } from './utils/index.js';
+
 // Type exports
 export type {
   TrackPoint,
