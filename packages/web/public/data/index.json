@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "generatedAt": "2026-02-05T08:55:29.189Z",
+  "activities": [
+    {
+      "id": "eb61f56501ca",
+      "sourceFile": "/var/home/user/Documents/drift/packages/cli/gpx_data/Afternoon_Run.gpx",
+      "name": "Afternoon Run",
+      "sport": "running",
+      "date": "2026-02-04T14:16:05.000Z",
+      "distance": 12.037481475338454,
+      "duration": 3871,
+      "movingTime": 3871,
+      "elevation": {
+        "gain": 14,
+        "loss": 14,
+        "max": 12,
+        "min": 5
+      },
+      "bounds": {
+        "north": 57.001642,
+        "south": 56.965781,
+        "east": 24.19653,
+        "west": 24.161841
+      },
+      "segments": 1,
+      "pointCount": {
+        "original": 3673,
+        "simplified": 62
+      },
+      "overviewPolyline": "BlBqv27Ku61zEWuEvSAwChBBuXtXBK_CAnB_FAkBvBAubtOAoGXAiC8DAuE7EA4OxKBuDgEA8I5FAgUyKB1C12BA6FnCD2Pv_BE-GuFD2B_DC-nBtYIyC4DAsC6GAakMCwB8DBmDCAkInHEkDoBAgDyTF8CwLDtLAAxI-CB_JlaIV7SA0CtJB5kBmYF3CQA5B6DB1GrFErG-ZBvCuCAhO4EE_R2CCkD60BB3BgUAlB2DAvHqCAlDrDA7S4PCzB1CArGEAjlBkTA7B0JAW-FA9B2CAjL2KChSyKAY0FCkH4ECoDXBuCzOAnIgGA",
+      "geometryFile": "flatgeobuf/eb61f56501ca.fgb"
+    },
+    {
+      "id": "85a81b0cb7aa",
+      "sourceFile": "/var/home/user/Documents/drift/packages/cli/gpx_data/Morning_Run.gpx",
+      "name": "Morning Run",
+      "sport": "running",
+      "date": "2026-02-01T08:04:11.000Z",
+      "distance": 12.469057344557687,
+      "duration": 5580,
+      "movingTime": 5580,
+      "elevation": {
+        "gain": 775,
+        "loss": 776,
+        "max": 99,
+        "min": 17
+      },
+      "bounds": {
+        "north": 57.162004,
+        "south": 57.150096,
+        "east": 24.842648,
+        "west": 24.826838
+      },
+      "segments": 1,
+      "pointCount": {
+        "original": 5234,
+        "simplified": 110
+      },
+      "overviewPolyline": "BlBkm88Kwoz3EoBxM_DA9N9GBnBtGBrJ5MA7FxBCpExDB1DrHC7GnGC3CtKArFrNA2HmTBmBsFCbmGBgI0IC6CkJBkdsRCkUgIAoC2LkCb2M6CqEVBOhBF_E7DpBhB1H1BA1L1BmC6MmCfoM4CyCIAqC_BHxE9DnBtBnHzBJrM5B1G9BAgHoCA-B-LgCV6M-C2CMAgChCH3EtDlBzB5OjDKzELhF9BAmFuBAkCsMiCX0M8CiENBYpBF3ElDjBtBtI7BBrL1B_EzBAoFgCCiCsOwChB8JsCiEHBWvBFxEnDlBpBnI7BD9KzBkCyK6Bb-NkDyCGAoChCHzEhDjBnBzI9BFjLzBrDxBAgDsBAiC0K2BMgK-BfgEqBuCQAuC_BHlEhEpBvB7H3BHjLzB3FtBAsF6BAqBwIoBqBuCUhBuNiD-DLAYjBHtE1DlBnB9I_BDpKvBlF3BA-EyBAuC8K8BjBgO-CiEPEavBHtCXVjCxDXlBlHxBF3L1B5FtBAuF6BAqCiNqChBsL0CmENBWjBFvCVVjC9CPpBjJhCDjKtB9X5IB7W5NA-ZkPAyS0GC",
+      "geometryFile": "flatgeobuf/85a81b0cb7aa.fgb"
+    },
+    {
+      "id": "ec6f6753895f",
+      "sourceFile": "/var/home/user/Documents/drift/packages/cli/gpx_data/Afternoon_Run2.gpx",
+      "name": "Afternoon Run",
+      "sport": "running",
+      "date": "2026-01-30T12:37:10.000Z",
+      "distance": 11.616814043226949,
+      "duration": 4060,
+      "movingTime": 3825,
+      "elevation": {
+        "gain": 14,
+        "loss": 14,
+        "max": 12,
+        "min": 5
+      },
+      "bounds": {
+        "north": 57.003172,
+        "south": 56.967712,
+        "east": 24.195911,
+        "west": 24.161839
+      },
+      "segments": 1,
+      "pointCount": {
+        "original": 3727,
+        "simplified": 59
+      },
+      "overviewPolyline": "BlBsx27Ku41zEWsC3QAuIrGD-R7RAZ7JA8e5PA6DeAkCiDA8SpPBgB-BA0DQA4IhEA4SgKBzCt2BA4FtCD4Pz_BCiHwFBuB3DCmoBxYIkD2EA2BqFAIuGA-B2JAyDSAqHhHEgG8BAoFuIFoCsMB4F6FAfwEAjDoDAjDfA1BrCAzEVBvIGAtH-CBpKpbIRjSAyCpJB3nB8YF1B2DBxGvFErG6ZBtCsCA_E0CCtbwFEuDgxBB5BmXAlBwDArH4CApDvDAlTkQClB9CArETAvnB6TAxB-JAU0FAvQgPEzC6NA",
+      "geometryFile": "flatgeobuf/ec6f6753895f.fgb",
+      "tags": ["race"]
+    }
+  ]
+}

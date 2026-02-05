@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useActivityStore } from '../../stores/activityStore';
-import { SportFilter, DateRangeFilter } from '../Filters';
+import { SportFilter, DateRangeFilter, TagFilter } from '../Filters';
 import type { DateRange } from '../Filters';
 import { ElevationStats, DistanceStats } from '../Stats';
 import { ActivityList } from './ActivityList';
@@ -30,8 +30,24 @@ export function SidebarPanel() {
     return SPORT_TYPE_ORDER.filter((type) => typesInData.has(type));
   }, [allActivities]);
 
+  // Compute available tags from all loaded activities (sorted alphabetically)
+  const availableTags = useMemo(() => {
+    const tagsInData = new Set<string>();
+    for (const activity of allActivities) {
+      if (activity.tags) {
+        for (const tag of activity.tags) {
+          tagsInData.add(tag);
+        }
+      }
+    }
+    return Array.from(tagsInData).sort();
+  }, [allActivities]);
+
   // When no types filter is set, all available types are implicitly selected
   const selectedTypes = filter.types ?? availableTypes;
+
+  // Get selected tag (first element of tags array, or null if not filtering)
+  const selectedTag = filter.tags?.[0] ?? null;
 
   const handleTypesChange = (types: ActivityType[]) => {
     if (types.length === availableTypes.length) {
@@ -59,6 +75,19 @@ export function SidebarPanel() {
     }
   };
 
+  const handleTagChange = (tag: string | null) => {
+    if (tag === null) {
+      // Remove tag filter
+      const { tags: _removed, ...rest } = filter;
+      setFilter(rest);
+    } else {
+      setFilter({
+        ...filter,
+        tags: [tag],
+      });
+    }
+  };
+
   return (
     <div className="flex h-full flex-col">
       <SportFilter
@@ -70,6 +99,11 @@ export function SidebarPanel() {
         startDate={filter.dateRange?.start}
         endDate={filter.dateRange?.end}
         onChange={handleDateRangeChange}
+      />
+      <TagFilter
+        availableTags={availableTags}
+        selectedTag={selectedTag}
+        onChange={handleTagChange}
       />
       <div className="p-3 space-y-3">
         <DistanceStats activities={activities} />
