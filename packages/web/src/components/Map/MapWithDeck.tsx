@@ -80,9 +80,15 @@ export function MapWithDeck({
 
   // Update layers when they change or when map becomes ready
   useEffect(() => {
-    if (isReady && overlayRef.current) {
-      overlayRef.current.setProps({ layers });
-      onLayersChange?.(layers);
+    if (isReady && overlayRef.current && layers.length > 0) {
+      // Use requestAnimationFrame to ensure overlay is fully initialized
+      const frameId = requestAnimationFrame(() => {
+        if (overlayRef.current) {
+          overlayRef.current.setProps({ layers });
+          onLayersChange?.(layers);
+        }
+      });
+      return () => cancelAnimationFrame(frameId);
     }
   }, [isReady, layers, onLayersChange]);
 
